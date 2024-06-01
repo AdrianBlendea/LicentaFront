@@ -1,0 +1,57 @@
+/* DocumentPage.css */
+.document-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .view-documents-section {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .upload-section {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+  }
+  
+  h2 {
+    margin-bottom: 15px;
+    color: #555;
+  }
+  
+  .document-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .document-list li {
+    margin-bottom: 10px;
+  }
+  
+  .document-list a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+  }
+  
+  .document-list a:hover {
+    color: #0056b3;
+  }
+  

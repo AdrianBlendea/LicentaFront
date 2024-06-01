@@ -1,0 +1,45 @@
+# Piston Configuration
+
+# Server configuration
+[server]
+address = "0.0.0.0"
+port = 3000
+
+# Compiler and interpreter configurations
+[compilers]
+
+  [compilers.java]
+  command = "javac -encoding UTF-8 -d . Solution.java && java Solution"
+
+  [compilers.python]
+  command = "python3 Solution.py"
+
+  [compilers.cpp]
+  command = "g++ -std=c++17 -O2 -o Solution Solution.cpp && ./Solution"
+
+# Language aliases
+[aliases]
+  [aliases.java]
+  aliases = ["java", "javac"]
+
+  [aliases.python]
+  aliases = ["python", "python3", "py"]
+
+  [aliases.cpp]
+  aliases = ["cpp", "c++", "g++"]
+
+# Language versions
+[versions]
+  [versions.java]
+  version = "OpenJDK 17.0.1"
+
+  [versions.python]
+  version = "Python 3.10.0"
+
+  [versions.cpp]
+  version = "g++ (GCC) 11.2.0"
+
+# Limits for code execution (optional)
+[limits]
+  timeout = 5
+  memory = 256

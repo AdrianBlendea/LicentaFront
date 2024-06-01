@@ -1,0 +1,33 @@
+/* DocumentView.css */
+.document-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .view-documents-section {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+  
+  .upload-section {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    margin-bottom: 15px;
+    color: #555;
+  }
+  
