@@ -14,24 +14,8 @@ const HomePage = () => {
             .then(response => {
                 const fetchedTypes = response.data;
                 setTypes(fetchedTypes);
-
-                // Fetch problems after fetching types
-                return axios.get('http://localhost:8080/api/problem/all');
             })
-            .then(response => {
-                const fetchedProblems = response.data;
-
-                // Categorize problems by type
-                const categorizedProblems = {};
-                fetchedProblems.forEach(problem => {
-                    if (!categorizedProblems[problem.type.id]) {
-                        categorizedProblems[problem.type.id] = [];
-                    }
-                    categorizedProblems[problem.type.id].push(problem);
-                });
-
-                setProblemsByType(categorizedProblems);
-            })
+          
             .catch(error => {
                 console.error('There was an error fetching the data!', error);
             });
