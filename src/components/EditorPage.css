@@ -1,0 +1,46 @@
+/* EditorPage.css */
+html,
+body {
+  overflow: hidden; /* Remove scroll bars from the entire page */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  height: 100%;
+}
+
+.editor-page {
+  position: relative; /* Set position to relative */
+  min-height: 100vh; /* Ensure the page takes the full height of the viewport */
+  background-color: #fff; /* Set background color to white */
+  padding: 20px; /* Add padding to space out the content */
+}
+
+.top-box {
+    width: 95%; /* Adjust width */
+    max-width: 1000px; /* Limit maximum width */
+    height: 200px; /* Adjust height */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9; /* Set background color to light gray */
+    color: #000; /* Set text color to black */
+    margin: 20px auto; /* Center the box horizontally */
+    overflow: auto; /* Enable scrolling if content overflows */
+}
+
+.editor-box {
+  width: 90%;
+  max-width: 900px;
+  max-height: 800px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Set background color to white */
+  color: #000; /* Set text color to black */
+  position: absolute; /* Set position to absolute */
+  bottom: 100px; /* Distance from the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+  overflow: auto; /* Add scrollbars if needed */
+}

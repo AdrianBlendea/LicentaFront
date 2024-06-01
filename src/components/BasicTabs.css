@@ -1,0 +1,60 @@
+/* BasicTabs.css */
+.tab-container {
+    width: 100%;
+  }
+  
+  .tab-header {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .tab-header .MuiTabs-indicator {
+    background-color: #1976d2;
+  }
+  
+  .tab-header .MuiTab-root {
+    text-transform: none;
+    min-width: 72px;
+    font-weight: 500;
+    margin-right: 20px;
+    color: #000; /* Default color for the tab labels */
+  }
+  
+  .tab-header .MuiTab-root.Mui-selected {
+    color: #1976d2; /* Color for the selected tab */
+  }
+  
+  .tab-header .MuiTab-root.Mui-focusVisible {
+    background-color: #d1eaff;
+  }
+  
+  .tab-panel {
+    padding: 16px;
+  }
+  
+  .problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .problem-card {
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .problem-link {
+    text-decoration: none;
+    color: #1976d2;
+  }
+  
+  .problem-link h2 {
+    margin: 0 0 8px 0;
+  }
+  
+  .problem-card p {
+    margin: 0;
+  }
+  
