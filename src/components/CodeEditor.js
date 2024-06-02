@@ -1,36 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import axios from 'axios';
+import Switch from '@mui/material/Switch';
 import './CodeEditor.css'; // Import CSS file for styling
 
 const CodeEditor = () => {
   const [code, setCode] = useState('');
+  const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState('python'); // Default language is Python
+  const [theme, setTheme] = useState('vs-dark'); // Default theme is vs-dark
+  const [stdinEnabled, setStdinEnabled] = useState(true); // State to track if stdin is enabled or disabled
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
   };
 
+  const handleThemeChange = (e) => {
+    setTheme(e.target.value);
+  };
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const toggleStdin = () => {
+    setStdinEnabled(!stdinEnabled); // Toggle the state
+  };
+
   const runCode = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://api.judge0.com/submissions?base64_encoded=false&wait=true', {
-        method: 'POST',
+      const response = await axios.post('https://onecompiler-apis.p.rapidapi.com/api/v1/run', {
+        language: language,
+        stdin: input, // Pass input value to the code execution
+        files: [
+          {
+            name: getFileName(language),
+            content: code,
+          },
+        ],
+      }, {
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          source_code: code,
-          language_id: getLanguageId(language), // Get language ID based on selected language
-          stdin: '', // No input provided
-        }),
+          'content-type': 'application/json',
+          'X-RapidAPI-Key': '339f3f676fmsh88d399db8b2d6c0p18231cjsn7cdac00b21c4',
+          'X-RapidAPI-Host': 'onecompiler-apis.p.rapidapi.com'
+        }
       });
-      const data = await response.json();
-      if (data.status && data.status.id === 3) {
+
+      const data = response.data;
+      if (data.stdout) {
         setOutput(data.stdout);
       } else {
-        setOutput(data.stderr);
+        setOutput(data.stderr || 'Error executing code');
       }
     } catch (error) {
       setOutput('Error executing code');
@@ -81,18 +104,16 @@ public class Main {
     }
   };
 
-  // Function to get language ID based on language name
-  const getLanguageId = (language) => {
+  const getFileName = (language) => {
     switch (language) {
       case 'python':
-        return 71;
+        return 'index.py';
       case 'cpp':
-        return 54;
+        return 'index.cpp';
       case 'java':
-        return 62;
-      // Add more cases for other languages if needed
+        return 'index.java';
       default:
-        return 71; // Default to Python if language not found
+        return 'index.py';
     }
   };
 
@@ -107,19 +128,36 @@ public class Main {
           {/* Add more options for other languages if needed */}
         </select>
       </div>
-      <MonacoEditor
-        width="800"
-        height="600"
-        language={language} // Use the selected language
-        theme="vs-dark"
-        value={code}
-        options={{ suggest: true }}
-        onChange={onChange}
-      />
-      <button onClick={runCode} disabled={loading}>Run Code</button>
+      <div className="theme-select-container">
+        <label htmlFor="theme-select">Select Theme: </label>
+        <select id="theme-select" value={theme} onChange={handleThemeChange}>
+          <option value="vs-dark">Dark</option>
+          <option value="vs-light">Light</option>
+          <option value="hc-black">High Contrast Dark</option>
+        </select>
+      </div>
+      <div className="run-button-container">
+        <button className="run-button" onClick={runCode} disabled={loading}>Run Code</button>
+      </div>
+      <div className="editor-container">
+        <MonacoEditor
+          width="800"
+          height="600"
+          language={language} // Use the selected language
+          theme={theme} // Use the selected theme
+          value={code}
+          options={{ suggest: true }}
+          onChange={onChange}
+        />
+      </div>
+      <div className="stdin-container">
+        <label htmlFor="stdin">Input (stdin):</label>
+        <input type="text" id="stdin" value={input} onChange={handleInputChange} disabled={!stdinEnabled} />
+        <Switch checked={stdinEnabled} onChange={toggleStdin} inputProps={{ 'aria-label': 'Enable Stdin' }} />
+      </div>
       <div>
         <h2>Output:</h2>
-        {loading ? <p>Loading...</p> : <pre>{output}</pre>}
+        {loading ? <p>Loading...</p> : <pre style={{ fontSize: '18px' }}>{output}</pre>}
       </div>
     </div>
   );

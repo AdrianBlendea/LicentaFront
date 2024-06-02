@@ -40,7 +40,7 @@ const EditorPage = () => {
         <p>{problemRequirement}</p>
       </div>
       <div className="editor-box">
-        <JDoodleEditor />
+        <CodeEditor />
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ body {
   background-color: #fff; /* Set background color to white */
   color: #000; /* Set text color to black */
   position: absolute; /* Set position to absolute */
-  bottom: 100px; /* Distance from the bottom */
+  bottom: 200px; /* Distance from the bottom */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center horizontally */
   overflow: auto; /* Add scrollbars if needed */
