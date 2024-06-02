@@ -9,9 +9,10 @@ const CodeEditor = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [language, setLanguage] = useState('python'); // Default language is Python
+  const [language, setLanguage] = useState('java'); // Default language is Pjava
   const [theme, setTheme] = useState('vs-dark'); // Default theme is vs-dark
   const [stdinEnabled, setStdinEnabled] = useState(true); // State to track if stdin is enabled or disabled
+  const [testResults, setTestResults] = useState(null); // State to store test results
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
@@ -20,6 +21,8 @@ const CodeEditor = () => {
   const handleThemeChange = (e) => {
     setTheme(e.target.value);
   };
+
+  
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -61,9 +64,48 @@ const CodeEditor = () => {
     setLoading(false);
   };
 
-  const onChange = (newValue) => {
-    setCode(newValue);
+  const fetchTestCases = async () => {
+    try {
+      const currentPageNumber = window.location.pathname.split('/').pop();
+
+      // Use the extracted number to construct the dynamic URL
+      const dynamicURL = `http://localhost:8080/test/${currentPageNumber}`;
+      
+      // Make the axios request using the dynamic URL
+      const response = await axios.get(dynamicURL);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching test cases:', error);
+      return [];
+    }
   };
+
+  const runTestCases = async () => {
+  const testCases = await fetchTestCases();
+  if (testCases.length === 0) {
+    console.error('No test cases available');
+    return;
+  }
+
+  const results = [];
+  
+  for (let i = 0; i < testCases.length; i++) {
+    const testCase = testCases[i];
+    const { input: testCaseInput, expectedOutput } = testCase;
+    
+    // Set input for the current test case
+    setInput(testCaseInput);
+    
+    // Run the code
+    await runCode();
+    
+    // After running the code, push the test result to results array
+    results.push({ ...testCase, actualOutput: output });
+  }
+
+  // After all test cases have been executed, update the testResults state
+  setTestResults(results);
+};
 
   useEffect(() => {
     setDefaultCode(language);
@@ -137,17 +179,25 @@ public class Main {
         </select>
       </div>
       <div className="run-button-container">
-        <button className="run-button" onClick={runCode} disabled={loading}>Run Code</button>
-      </div>
+  <button className="run-button" onClick={runCode} disabled={loading}>Run Code</button>
+  <button className="run-button run-test-button" onClick={runTestCases} disabled={loading}>Run Test Cases</button>
+</div>
       <div className="editor-container">
         <MonacoEditor
-          width="800"
+          width="900"
           height="600"
-          language={language} // Use the selected language
+          language={'language'} // Use the selected language
           theme={theme} // Use the selected theme
           value={code}
-          options={{ suggest: true }}
-          onChange={onChange}
+          options={{
+            automaticLayout: true,
+            minimap: { enabled: false }, // Disable minimap
+            suggest: true, // Enable code suggestions (code completion)
+            wordWrap: 'on', // Enable word wrapping
+            fontFamily: '"Fira Code", "Courier New", monospace', // Custom font family
+            fontSize: 16, // Custom font size
+          }}
+          onChange={setCode}
         />
       </div>
       <div className="stdin-container">
@@ -159,6 +209,22 @@ public class Main {
         <h2>Output:</h2>
         {loading ? <p>Loading...</p> : <pre style={{ fontSize: '18px' }}>{output}</pre>}
       </div>
+      {testResults && (
+  <div>
+    <h2>Test Results:</h2>
+    <ul>
+      {testResults.map((result, index) => (
+        <li key={index} className={result.actualOutput === result.expectedOutput ? 'passed' : 'failed'}>
+          Test Case {result.id}: {result.actualOutput === result.expectedOutput ? 'Passed' : 'Failed'}
+          <br />
+          <span>Expected: {result.expectedOutput}</span><br />
+          <span>Actual: {result.actualOutput}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
     </div>
   );
 };

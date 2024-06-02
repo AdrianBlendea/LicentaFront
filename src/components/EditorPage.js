@@ -5,6 +5,7 @@ import axios from 'axios'; // Import axios if needed
 import './EditorPage.css';
 import './CodeEditor'
 import CodeEditor from './CodeEditor';
+import CodeEditor2 from './editor/CodeEditor';
 
 const EditorPage = () => {
   const { problemId } = useParams();
