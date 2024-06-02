@@ -28,7 +28,7 @@ function DocumentView() {
   return (
     <Container maxWidth="md">
       <Typography variant="h4" gutterBottom>
-        View Documents
+        Categorii
       </Typography>
       <DocumentTabs categories={categories} documentsByCategory={documentsByCategory} />
     </Container>

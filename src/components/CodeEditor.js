@@ -186,12 +186,12 @@ public class Main {
       <div className="editor-container">
         <MonacoEditor
           width="900"
-          height="75vh"
-          language={'language'} // Use the selected language
+          height="40vh"
+          language={language} // Use the selected language
           theme={theme} // Use the selected theme
           value={code}
           options={{
-            automaticLayout: true,
+            //automaticLayout: true,
             minimap: { enabled: false }, // Disable minimap
             suggest: true, // Enable code suggestions (code completion)
             wordWrap: 'on', // Enable word wrapping
