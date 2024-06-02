@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import MonacoEditor from 'react-monaco-editor';
+import React, { useState, useEffect} from 'react';
+import MonacoEditor from "@monaco-editor/react";
 import axios from 'axios';
 import Switch from '@mui/material/Switch';
 import './CodeEditor.css'; // Import CSS file for styling
@@ -9,10 +9,11 @@ const CodeEditor = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [language, setLanguage] = useState('java'); // Default language is Pjava
+  const [language, setLanguage] = useState('java'); // Default language is java
   const [theme, setTheme] = useState('vs-dark'); // Default theme is vs-dark
   const [stdinEnabled, setStdinEnabled] = useState(true); // State to track if stdin is enabled or disabled
   const [testResults, setTestResults] = useState(null); // State to store test results
+
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
@@ -185,12 +186,12 @@ public class Main {
       <div className="editor-container">
         <MonacoEditor
           width="900"
-          height="600"
-          language={'language'} // Use the selected language
+          height="40vh"
+          language={language} // Use the selected language
           theme={theme} // Use the selected theme
           value={code}
           options={{
-            automaticLayout: true,
+            //automaticLayout: true,
             minimap: { enabled: false }, // Disable minimap
             suggest: true, // Enable code suggestions (code completion)
             wordWrap: 'on', // Enable word wrapping

@@ -7,7 +7,7 @@ import './DocumentPage.css';
 function DocumentPage() {
   return (
     <div className="document-page">
-      <h1 className="header">Document Page</h1>
+      <h1 className="header">Documente de studiu</h1>
       <div className="view-documents-section">
         <DocumentView />
       </div>
