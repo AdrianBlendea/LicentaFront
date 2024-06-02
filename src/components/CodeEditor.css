@@ -125,3 +125,18 @@
 .stdin-container input:focus {
   border-color: #555;
 }
+.passed {
+  color: green;
+}
+
+.failed {
+  color: red;
+}
+.passed span,
+.failed span {
+  margin-left: 20px;
+}
+
+.run-test-button {
+  margin-left: 10px; /* Adjust the margin as needed */
+}
