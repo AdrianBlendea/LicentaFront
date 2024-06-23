@@ -1,34 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import './LoginPage.css';
 
 function SignUpForm() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     nume: "",
     email: "",
     parola: ""
   });
 
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const handleChange = evt => {
-    const value = evt.target.value;
+    const { name, value } = evt.target;
     setState({
       ...state,
-      [evt.target.name]: value
+      [name]: value
     });
+
+    if (name === "email") {
+      validateEmail(value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsEmailValid(emailRegex.test(email));
   };
 
   const handleOnSubmit = evt => {
     evt.preventDefault();
 
-    const { nume, email, parola } = state;
-    alert(
-      `Te-ai înscris cu numele: ${nume}, email: ${email} și parola: ${parola}`
-    );
+    // Show the dialog immediately
+    setOpen(true);
 
-    for (const key in state) {
-      setState({
-        ...state,
-        [key]: ""
+    const { nume, email, parola } = state;
+
+    const userCreateDTO = {
+      name: nume,
+      email: email,
+      password: parola
+    };
+
+    // Clear the form fields
+    setState({
+      nume: "",
+      email: "",
+      parola: ""
+    });
+
+    // Using fetch API to send the registration request
+    fetch('http://localhost:8080/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userCreateDTO)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Registration failed');
+        }
+        return response.json();
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
-    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -67,8 +109,27 @@ function SignUpForm() {
           onChange={handleChange}
           placeholder="Parolă"
         />
-        <button>Înregistrează-te</button>
+        <button type="submit" disabled={!isEmailValid}>Înregistrează-te</button>
       </form>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirmare"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Un email de confirmare a fost trimis la adresa oferită.Va rugam verificati emailul pentru a va activa contul.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
