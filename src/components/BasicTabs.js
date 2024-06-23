@@ -1,14 +1,12 @@
-// BasicTabs.js
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './BasicTabs.css';
-
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,20 +42,32 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs({ types }) {
-  const [value, setValue] = React.useState(0);
-  const [problems, setProblems] = React.useState([]);
+  const [value, setValue] = useState(0);
+  const [problems, setProblems] = useState([]);
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   const fetchProblems = (typeId) => {
-    axios.get(`http://localhost:8080/api/problem/type/${typeId}`)
-      .then(response => {
-        setProblems(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the problems!', error);
-      });
+    const userData = localStorage.getItem('userData');
+    let token = '';
+
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      token = parsedData.token; // Extract the token from the parsed userData
+    }
+
+    axios.get(`http://localhost:8080/api/problem/type/${typeId}`, {
+      headers: {
+      }
+    })
+    .then(response => {
+      setProblems(response.data);
+    })
+    .catch(error => {
+      console.error('There was an error fetching the problems!', error);
+    });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (types.length > 0) {
       fetchProblems(types[0].id);
     }
@@ -66,6 +76,15 @@ export default function BasicTabs({ types }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     fetchProblems(types[newValue].id);
+  };
+
+  const handleProblemClick = (problemId) => {
+    const userData = localStorage.getItem('userData');
+    if (!userData) {
+      navigate('/login');
+    } else {
+      navigate(`/editor/${problemId}`);
+    }
   };
 
   return (
@@ -82,10 +101,10 @@ export default function BasicTabs({ types }) {
           <div className="problem-list">
             {problems.map(problem => (
               <div className="problem-card" key={problem.id}>
-                <Link to={`/editor/${problem.id}`} className="problem-link">
+                <div onClick={() => handleProblemClick(problem.id)} className="problem-link" style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}>
                   <h2>{problem.name}</h2>
-                </Link>
-                <p>{problem.requirment}</p>
+                </div>
+                <p>{problem.requirement}</p>
               </div>
             ))}
           </div>

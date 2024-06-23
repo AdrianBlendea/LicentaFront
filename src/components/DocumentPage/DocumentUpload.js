@@ -11,7 +11,21 @@ function DocumentUpload() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/categories');
+        // Retrieve the auth token from localStorage
+        const userData = localStorage.getItem('userData');
+        let token = '';
+
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          token = parsedData.token; // Extract the token from the parsed userData
+        }
+
+        // Fetch categories with the auth token
+        const response = await axios.get('http://localhost:8080/api/categories', {
+          headers: {
+            'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+          }
+        });
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -34,9 +48,20 @@ function DocumentUpload() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('categoryId', selectedCategory); // Assuming 'categoryId' is the parameter name expected by the backend
+      formData.append('category', selectedCategory); // Assuming 'categoryId' is the parameter name expected by the backend
+
+      // Retrieve the auth token from localStorage
+      const userData = localStorage.getItem('userData');
+      let token = '';
+
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        token = parsedData.token; // Extract the token from the parsed userData
+      }
+
       await axios.post('http://localhost:8080/documents/upload', formData, {
         headers: {
+          'Authorization': `Bearer ${token}`, // Add the token to the Authorization header
           'Content-Type': 'multipart/form-data',
         },
       });
