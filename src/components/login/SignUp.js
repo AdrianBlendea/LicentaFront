@@ -1,10 +1,12 @@
 import React from "react";
+
 function SignUpForm() {
   const [state, setState] = React.useState({
-    name: "",
+    nume: "",
     email: "",
-    password: ""
+    parola: ""
   });
+
   const handleChange = evt => {
     const value = evt.target.value;
     setState({
@@ -16,9 +18,9 @@ function SignUpForm() {
   const handleOnSubmit = evt => {
     evt.preventDefault();
 
-    const { name, email, password } = state;
+    const { nume, email, parola } = state;
     alert(
-      `You are sign up with name: ${name} email: ${email} and password: ${password}`
+      `Te-ai înscris cu numele: ${nume}, email: ${email} și parola: ${parola}`
     );
 
     for (const key in state) {
@@ -32,7 +34,7 @@ function SignUpForm() {
   return (
     <div className="form-container sign-up-container">
       <form onSubmit={handleOnSubmit}>
-        <h1>Create Account</h1>
+        <h1>Creează Cont</h1>
         <div className="social-container">
           <a href="#" className="social">
             <i className="fab fa-facebook-f" />
@@ -44,13 +46,12 @@ function SignUpForm() {
             <i className="fab fa-linkedin-in" />
           </a>
         </div>
-        <span>or use your email for registration</span>
         <input
           type="text"
-          name="name"
-          value={state.name}
+          name="nume"
+          value={state.nume}
           onChange={handleChange}
-          placeholder="Name"
+          placeholder="Nume"
         />
         <input
           type="email"
@@ -61,12 +62,12 @@ function SignUpForm() {
         />
         <input
           type="password"
-          name="password"
-          value={state.password}
+          name="parola"
+          value={state.parola}
           onChange={handleChange}
-          placeholder="Password"
+          placeholder="Parolă"
         />
-        <button>Sign Up</button>
+        <button>Înregistrează-te</button>
       </form>
     </div>
   );

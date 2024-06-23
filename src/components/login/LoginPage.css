@@ -92,9 +92,11 @@
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
-  width: 768px;
+  width: 100vw; /* 90% of the viewport width */
+  height: 100vh; /* 90% of the viewport height */
   max-width: 100%;
-  min-height: 480px;
+  max-height: 100%;
+  min-height: 480px; /* Minimum height for the container */
 }
 
 .LoginPage-wrapper .form-container {
@@ -247,4 +249,17 @@
 .LoginPage-wrapper footer a {
   color: #3c97bf;
   text-decoration: none;
+}
+input.invalid {
+  border-color: red;
+}
+
+input.valid {
+  border-color: green;
+}
+
+button:disabled,
+button.disabled-button {
+  background-color: grey;
+  cursor: not-allowed;
 }

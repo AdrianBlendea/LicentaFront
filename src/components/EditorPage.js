@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import JDoodleEditor from './JDoodleEditor';
 import { useParams } from 'react-router-dom';
-import axios from 'axios'; // Import axios if needed
+import axios from 'axios'; // Import axios
 import './EditorPage.css';
-import './CodeEditor'
+import './CodeEditor';
 import CodeEditor from './CodeEditor';
-
 
 const EditorPage = () => {
   const { problemId } = useParams();
@@ -14,16 +13,32 @@ const EditorPage = () => {
   const [problemRequirement, setProblemRequirement] = useState('');
 
   useEffect(() => {
-    // Fetch problem requirement based on problemId
-    axios.get(`http://localhost:8080/api/problem/${problemId}`)
-      .then(response => {
+    const fetchProblemRequirement = async () => {
+      try {
+        // Retrieve the auth token from localStorage
+        const userData = localStorage.getItem('userData');
+        let token = '';
+
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          token = parsedData.token; // Extract the token from the parsed userData
+        }
+
+        // Fetch problem requirement with the auth token
+        const response = await axios.get(`http://localhost:8080/api/problem/${problemId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+          }
+        });
         setProblemRequirement(response.data.requirment);
         setIsLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         setError(error);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchProblemRequirement();
   }, [problemId]);
 
   if (isLoading) {
