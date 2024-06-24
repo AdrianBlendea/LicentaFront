@@ -1,5 +1,4 @@
 /* EditorPage.css */
-html,
 body {
   overflow: hidden; /* Remove scroll bars from the entire page */
   margin: 0; /* Remove default margin */
@@ -10,36 +9,38 @@ body {
 .editor-page {
   position: relative; /* Set position to relative */
   min-height: 100vh; /* Ensure the page takes the full height of the viewport */
-  background-color: #fff; /* Set background color to white */
   padding: 20px; /* Add padding to space out the content */
+  background-image: url('./background.jpg'); /* Add your background image */
+  background-size: cover; /* Ensure the image covers the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
 }
-
 .top-box {
-    width: 95%; /* Adjust width */
-    max-width: 1000px; /* Limit maximum width */
-    height: 200px; /* Adjust height */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9; /* Set background color to light gray */
-    color: #000; /* Set text color to black */
-    margin: 20px auto; /* Center the box horizontally */
-    overflow: auto; /* Enable scrolling if content overflows */
-}
-
-.editor-box {
-  width: 90%;
-  max-width: 900px;
-  max-height: 800px;
+  width: 90vw; /* Adjust width to 90% of the viewport width */
+  max-width: 90vw; /* Limit maximum width to 90% of the viewport width */
+  height: 9vh; /* Adjust height to 20% of the viewport height */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff; /* Set background color to white */
-  color: #000; /* Set text color to black */
+  background-color: #333; /* Set background color to a dark grey */
+  color: #f0f0f0; /* Set text color to a light grey */
+  margin: 2vh auto; /* Center the box horizontally with vertical margin */
+  overflow: auto; /* Enable scrolling if content overflows */
+}
+
+.editor-box {
+  width: 62vw; /* Adjust width to 90% of the viewport width */
+  max-width: 90vw; /* Limit maximum width to 90% of the viewport width */
+  height: 75vh; /* Adjust height to 70% of the viewport height */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #444; /* Set background color to a slightly lighter dark grey than the top-box */
+  color: #f0f0f0; /* Set text color to a light grey */
   position: absolute; /* Set position to absolute */
-  bottom: 200px; /* Distance from the bottom */
+  bottom: 7vh; /* Distance from the bottom, 5% of the viewport height */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center horizontally */
   overflow: auto; /* Add scrollbars if needed */

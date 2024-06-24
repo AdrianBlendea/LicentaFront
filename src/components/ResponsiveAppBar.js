@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SiteIcon from './siteIcon.png';
 import { useAuth } from './AuthContext';
 
@@ -25,6 +25,7 @@ function ResponsiveAppBar() {
   const { isAuthenticated, logout } = useAuth(); // Use the useAuth hook to get the authentication status and logout function
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -45,6 +46,15 @@ function ResponsiveAppBar() {
   const handleLogout = () => {
     logout();
     handleCloseUserMenu();
+  };
+
+  const handlePageClick = (path) => {
+    if (!isAuthenticated && path === '/home') {
+      navigate('/login');
+    } else {
+      navigate(path);
+    }
+    handleCloseNavMenu();
   };
 
   return (
@@ -100,7 +110,10 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} to={page.path}>
+                <MenuItem
+                  key={page.name}
+                  onClick={() => handlePageClick(page.path)}
+                >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -129,10 +142,8 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageClick(page.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
-                component={Link}
-                to={page.path}
               >
                 {page.name}
               </Button>

@@ -1,60 +1,89 @@
 /* BasicTabs.css */
 .tab-container {
-    width: 100%;
-  }
-  
-  .tab-header {
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .tab-header .MuiTabs-indicator {
-    background-color: #1976d2;
-  }
-  
-  .tab-header .MuiTab-root {
-    text-transform: none;
-    min-width: 72px;
-    font-weight: 500;
-    margin-right: 20px;
-    color: #000; /* Default color for the tab labels */
-  }
-  
-  .tab-header .MuiTab-root.Mui-selected {
-    color: #1976d2; /* Color for the selected tab */
-  }
-  
-  .tab-header .MuiTab-root.Mui-focusVisible {
-    background-color: #d1eaff;
-  }
-  
-  .tab-panel {
-    padding: 16px;
-  }
-  
-  .problem-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .problem-card {
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .problem-link {
-    text-decoration: none;
-    color: #1976d2;
-  }
-  
-  .problem-link h2 {
-    margin: 0 0 8px 0;
-  }
-  
-  .problem-card p {
-    margin: 0;
-  }
-  
+  width: 100%;
+}
+
+.tab-header {
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-header .MuiTabs-indicator {
+  background-color: #1976d2;
+}
+
+.tab-header .MuiTab-root {
+  text-transform: none;
+  min-width: 72px;
+  font-weight: 500;
+  margin-right: 20px;
+  color: #000; /* Default color for the tab labels */
+  transition: color 0.3s;
+}
+
+.tab-header .MuiTab-root.Mui-selected {
+  color: #1976d2; /* Color for the selected tab */
+}
+
+.tab-header .MuiTab-root:hover {
+  color: #005bb5; /* Color for the tab labels on hover */
+}
+
+.tab-header .MuiTab-root.Mui-focusVisible {
+  background-color: #d1eaff;
+}
+
+.tab-panel {
+  padding: 16px;
+}
+
+.problem-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.problem-card {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Ensure background is white */
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.problem-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-color: #bbb;
+}
+
+.problem-link {
+  text-decoration: none;
+  color: #000; /* Color for unsolved problems */
+  transition: color 0.3s;
+}
+
+.problem-link:hover {
+  color: #005bb5; /* Change the color on hover */
+}
+
+.problem-link h2 {
+  margin: 0 0 8px 0;
+}
+
+.problem-card p {
+  margin: 0;
+}
+
+/* Add specific styles for the solved problems */
+.problem-card.solved {
+  border-color: #4caf50;
+  background-color: #e8f5e9;
+}
+
+.problem-link.solved {
+  color: #4caf50;
+}
+
+.problem-link.solved:hover {
+  color: #388e3c;
+}

@@ -49,14 +49,20 @@ export default function BasicTabs({ types }) {
   const fetchProblems = (typeId) => {
     const userData = localStorage.getItem('userData');
     let token = '';
+    let userId = '';
 
     if (userData) {
       const parsedData = JSON.parse(userData);
       token = parsedData.token; // Extract the token from the parsed userData
+      userId = parsedData.id;
     }
 
     axios.get(`http://localhost:8080/api/problem/type/${typeId}`, {
       headers: {
+        'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+      },
+      params: {
+        userId: userId
       }
     })
     .then(response => {
@@ -100,8 +106,16 @@ export default function BasicTabs({ types }) {
         <CustomTabPanel value={value} index={index} key={type.id}>
           <div className="problem-list">
             {problems.map(problem => (
-              <div className="problem-card" key={problem.id}>
-                <div onClick={() => handleProblemClick(problem.id)} className="problem-link" style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}>
+              <div 
+                className={`problem-card ${problem.solved ? 'solved' : ''}`} 
+                key={problem.id}
+                style={{ backgroundColor: problem.solved ? '#e8f5e9' : '#fff' }} // White background for unsolved problems
+              >
+                <div 
+                  onClick={() => handleProblemClick(problem.id)} 
+                  className={`problem-link ${problem.solved ? 'solved' : ''}`} 
+                  style={{ cursor: 'pointer' }}
+                >
                   <h2>{problem.name}</h2>
                 </div>
                 <p>{problem.requirement}</p>
