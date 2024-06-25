@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
 import SiteIcon from './siteIcon.png';
+import UserIcon from './userIcon.png'; // Import the default user icon
 import { useAuth } from './AuthContext';
 import axios from 'axios';
 
@@ -21,13 +22,13 @@ const pages = [
   { name: 'Documente', path: '/documents' },
   { name: 'Clasament', path: '/board' },
 ];
-const settings = ['Account', 'Dashboard'];
+
 
 function ResponsiveAppBar() {
   const { isAuthenticated, logout } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [profilePicture, setProfilePicture] = React.useState('/static/images/avatar/2.jpg');
+  const [profilePicture, setProfilePicture] = React.useState(UserIcon); // Default to UserIcon
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -52,10 +53,15 @@ function ResponsiveAppBar() {
           },
         });
 
-        const pictureUrl = URL.createObjectURL(new Blob([response.data], { type: 'image/jpeg' }));
-        setProfilePicture(pictureUrl);
+        if (response.data.byteLength > 0) {
+          const pictureUrl = URL.createObjectURL(new Blob([response.data], { type: 'image/jpeg' }));
+          setProfilePicture(pictureUrl);
+        } else {
+          setProfilePicture(UserIcon); // Use default icon if the response is empty
+        }
       } catch (error) {
         console.error('Error fetching profile picture', error);
+        setProfilePicture(UserIcon); // Use default icon in case of an error
       }
     };
 
@@ -123,7 +129,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            My Site
+            MyApp
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -219,11 +225,7 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                
                 <MenuItem onClick={handleProfileClick}>
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>

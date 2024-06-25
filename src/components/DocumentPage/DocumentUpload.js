@@ -66,6 +66,7 @@ function DocumentUpload() {
         },
       });
       alert('Document uploaded successfully');
+      window.location.reload();
     } catch (error) {
       console.error('Error uploading document:', error);
       alert('Failed to upload document');

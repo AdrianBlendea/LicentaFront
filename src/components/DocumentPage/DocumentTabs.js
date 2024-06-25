@@ -3,17 +3,24 @@ import axios from 'axios';
 import { Tabs, Tab, Box, List, ListItem, ListItemText, ListItemIcon, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download'; // Import DownloadIcon
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import ConfirmationDialog from '../ConfirmationDialog'; // Import the ConfirmationDialog component
+import './DocumentTabs.css'; // Add your custom CSS here
 
 function DocumentTabs({ categories }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth(); // Assuming user object has the role info
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [documentsByCategory, setDocumentsByCategory] = useState({});
   const [selectedDocumentUrl, setSelectedDocumentUrl] = useState('');
   const [selectedDocumentType, setSelectedDocumentType] = useState('');
   const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
+  const [documentToDelete, setDocumentToDelete] = useState(null); // State to store document to delete
+  const [dialogMessage, setDialogMessage] = useState(''); // State to store dialog message
 
   useEffect(() => {
     const fetchDocumentsByCategory = async () => {
@@ -48,44 +55,34 @@ function DocumentTabs({ categories }) {
     setSelectedCategory(newValue);
   };
 
-  const handleDocumentClick = (documentId, documentName) => {
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
+  const handleDownloadClick = async (documentId, documentName) => {
+    try {
+      const userData = localStorage.getItem('userData');
+      let token = '';
 
-    // Fetch and download the document
-    const fetchDocument = async () => {
-      try {
-        const userData = localStorage.getItem('userData');
-        let token = '';
-
-        if (userData) {
-          const parsedData = JSON.parse(userData);
-          token = parsedData.token;
-        }
-
-        const response = await axios.get(`http://localhost:8080/documents/${documentId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-          responseType: 'blob',
-        });
-
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', documentName);
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-      } catch (error) {
-        console.error('Error fetching document:', error);
-        alert('Failed to fetch document');
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        token = parsedData.token;
       }
-    };
 
-    fetchDocument();
+      const response = await axios.get(`http://localhost:8080/documents/${documentId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', documentName);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    } catch (error) {
+      console.error('Error fetching document:', error);
+      alert('Failed to fetch document');
+    }
   };
 
   const handlePreviewClick = async (documentId, documentName) => {
@@ -117,6 +114,48 @@ function DocumentTabs({ categories }) {
     } catch (error) {
       console.error('Error fetching document:', error);
       alert('Failed to fetch document');
+    }
+  };
+
+  const handleOpenDialog = (documentId) => {
+    setDocumentToDelete(documentId);
+    setDialogMessage('Esti sigur ca vrei sa stergi acest document?'); // Set the custom message
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setDocumentToDelete(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (documentToDelete) {
+      const userData = localStorage.getItem('userData');
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        const token = parsedData.token;
+
+        axios.delete(`http://localhost:8080/documents/delete`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          params: {
+            documentId: documentToDelete
+          }
+        })
+          .then(response => {
+            console.log(response.data);
+            // Remove the document from the state
+            const updatedDocuments = { ...documentsByCategory };
+            updatedDocuments[categories[selectedCategory].id] = updatedDocuments[categories[selectedCategory].id].filter(doc => doc.id !== documentToDelete);
+            setDocumentsByCategory(updatedDocuments);
+            handleCloseDialog();
+          })
+          .catch(error => {
+            console.error('There was an error deleting the document!', error);
+            handleCloseDialog();
+          });
+      }
     }
   };
 
@@ -163,7 +202,7 @@ function DocumentTabs({ categories }) {
       <Box p={3}>
         <List>
           {documentsByCategory[categories[selectedCategory]?.id]?.map((document) => (
-            <ListItem key={document.id || document} button={isAuthenticated} onClick={() => handleDocumentClick(document.id, document.name)}>
+            <ListItem key={document.id || document}>
               <ListItemIcon>
                 <DescriptionIcon />
               </ListItemIcon>
@@ -171,9 +210,22 @@ function DocumentTabs({ categories }) {
                 primary={isAuthenticated ? document.name : document}
               />
               {isAuthenticated && (
-                <IconButton edge="end" aria-label="preview" onClick={() => handlePreviewClick(document.id, document.name)}>
-                  <VisibilityIcon />
-                </IconButton>
+                <div className="button-container">
+                  <IconButton className="icon-button" aria-label="preview" onClick={() => handlePreviewClick(document.id, document.name)}>
+                    <VisibilityIcon />
+                  </IconButton>
+                  <IconButton className="icon-button" aria-label="download" onClick={() => handleDownloadClick(document.id, document.name)}>
+                    <DownloadIcon />
+                  </IconButton>
+                  {user && user.role === 'admin' && (
+                    <button
+                      onClick={() => handleOpenDialog(document.id)}
+                      className="delete-button"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
               )}
             </ListItem>
           ))}
@@ -190,6 +242,12 @@ function DocumentTabs({ categories }) {
           </Button>
         </DialogActions>
       </Dialog>
+      <ConfirmationDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmDelete}
+        message={dialogMessage} // Pass the message prop
+      />
     </Paper>
   );
 }
