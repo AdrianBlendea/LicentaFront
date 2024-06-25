@@ -14,18 +14,55 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
 import SiteIcon from './siteIcon.png';
 import { useAuth } from './AuthContext';
+import axios from 'axios';
 
 const pages = [
-  { name: 'Probleme', path: '/home' }, // Setează ruta pentru Probleme
-  { name: 'Documente', path: '/documents' }, // Setează ruta pentru Documente
+  { name: 'Probleme', path: '/home' },
+  { name: 'Documente', path: '/documents' },
+  { name: 'Clasament', path: '/board' },
 ];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = ['Account', 'Dashboard'];
 
 function ResponsiveAppBar() {
-  const { isAuthenticated, logout } = useAuth(); // Use the useAuth hook to get the authentication status and logout function
+  const { isAuthenticated, logout } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [profilePicture, setProfilePicture] = React.useState('/static/images/avatar/2.jpg');
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetchUserData = () => {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      return {
+        id: userData.id || '',
+        token: userData.token || '',
+      };
+    };
+
+    const fetchProfilePicture = async () => {
+      try {
+        const { id, token } = fetchUserData();
+        const response = await axios.get('http://localhost:8080/user/getPicture', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+          responseType: 'arraybuffer',
+          params: {
+            userId: id,
+          },
+        });
+
+        const pictureUrl = URL.createObjectURL(new Blob([response.data], { type: 'image/jpeg' }));
+        setProfilePicture(pictureUrl);
+      } catch (error) {
+        console.error('Error fetching profile picture', error);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchProfilePicture();
+    }
+  }, [isAuthenticated]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,6 +92,15 @@ function ResponsiveAppBar() {
       navigate(path);
     }
     handleCloseNavMenu();
+  };
+
+  const handleProfileClick = () => {
+    if (isAuthenticated) {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
+    handleCloseUserMenu();
   };
 
   return (
@@ -154,7 +200,7 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="User" src={profilePicture} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -178,6 +224,9 @@ function ResponsiveAppBar() {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem onClick={handleProfileClick}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
