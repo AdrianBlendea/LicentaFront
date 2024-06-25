@@ -1,0 +1,32 @@
+.button-container {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+    align-items: center;
+  }
+  
+  .delete-button {
+    padding: 5px 10px;
+    color: white;
+    background-color: red;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-right: 100px;
+  }
+  
+  .delete-button:hover {
+    background-color: darkred;
+  }
+  
+  .icon-button {
+    padding: 5px;
+    color: black;
+    transition: color 0.3s ease;
+  }
+  
+  .icon-button:hover {
+    color: #005bb5;
+  }
+  
