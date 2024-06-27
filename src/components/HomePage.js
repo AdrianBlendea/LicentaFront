@@ -1,71 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import BasicTabs from './BasicTabs'; // Import the BasicTabs component
-import CreateProblemDialog from './CreateProblemDialog'; // Import the CreateProblemDialog component
+import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link
+import LottieAnimation from '../components/LottieAnimation';
+import mainAnimationData from './homeanimation.json'; // Main animation data
+import pythonanimation from './pythonanimation.json'; // Small animation data 1
+import javaanimation from './javaanimation.json'; // Small animation data 2
+import canimation from './canimation.json'; // Small animation data 3
 import './HomePage.css';
 
-const HomePage = () => {
-    const [types, setTypes] = useState([]);
-    const [problemsByType, setProblemsByType] = useState({});
-    const [openCreateDialog, setOpenCreateDialog] = useState(false); // State for create dialog
-    const [isAdmin, setIsAdmin] = useState(false); // State to track if the user is an admin
-
-    useEffect(() => {
-        const userData = localStorage.getItem('userData');
-        let token = '';
-        let role = '';
-
-        if (userData) {
-            const parsedData = JSON.parse(userData);
-            token = parsedData.token;
-            role = parsedData.role;
-            if (role === 'admin') {
-                setIsAdmin(true); // Set isAdmin to true if the user is an admin
-            }
-        }
-
-        axios.get('http://localhost:8080/api/type/all', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            const fetchedTypes = response.data;
-            setTypes(fetchedTypes);
-        })
-        .catch(error => {
-            console.error('There was an error fetching the data!', error);
-        });
-    }, []);
-
-    const handleOpenCreateDialog = () => {
-        setOpenCreateDialog(true);
-    };
-
-    const handleCloseCreateDialog = () => {
-        setOpenCreateDialog(false);
-    };
-
-    const handleProblemCreated = (newProblem) => {
-        // Logic to handle the new problem creation and update the state if needed
-    };
-
-    return (
-        <div className="container">
-            <h1>All Problems</h1>
-            {isAdmin && (
-                <button className="create-problem-button" onClick={handleOpenCreateDialog}>
-                    Create Problem
-                </button>
-            )}
-            <BasicTabs types={types} problemsByType={problemsByType} />
-            <CreateProblemDialog
-                open={openCreateDialog}
-                onClose={handleCloseCreateDialog}
-                onProblemCreated={handleProblemCreated}
-            />
+const Homepage = () => {
+  return (
+    <div className="homepage">
+      <header className="homepage-header">
+        <h1>Bine ai venit!</h1>
+        <h1>Începeți călătoria în programare</h1>
+        <div className="content">
+          <div className="left-text">
+            <h2>Suport Cuprinzător</h2>
+            <p>
+              Aplicația noastră de programare oferă suport cuprinzător pentru rezolvarea problemelor
+              în diverse limbaje de programare. Fie că ești începător sau programator avansat,
+              vei găsi resurse și instrumente care să te ajute să-ți îmbunătățești abilitățile
+              în Java, C++ și Python.
+            </p>
+            <div className="small-animations">
+              <LottieAnimation animationData={javaanimation} />
+              <LottieAnimation animationData={pythonanimation} />
+              <LottieAnimation animationData={canimation} />
+            </div>
+          </div>
+          <div className="animation-container">
+            <div className="animation">
+              <LottieAnimation animationData={mainAnimationData} /> {/* Passing main animation data as prop */}
+            </div>
+          </div>
+          <div className="right-text">
+            <h2>Comunitate Interactivă</h2>
+            <p>
+              Alătură-te comunității noastre pentru a accesa tutoriale, ghiduri de rezolvare a problemelor
+              și provocări interactive de codare. Platforma noastră este proiectată să îți ofere
+              instrumentele și cunoștințele necesare pentru a aborda sarcini de programare complexe
+              și pentru a-ți îmbunătăți competențele de codare.
+            </p>
+            <Link to="/problems" className="start-button">
+              Start Programming
+            </Link>
+          </div>
         </div>
-    );
+      </header>
+    </div>
+  );
 };
 
-export default HomePage;
+export default Homepage;
