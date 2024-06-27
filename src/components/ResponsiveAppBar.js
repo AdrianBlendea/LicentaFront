@@ -18,10 +18,10 @@ import { useAuth } from './AuthContext';
 import axios from 'axios';
 
 const pages = [
-  { name: 'Probleme', path: '/home' },
+  { name: 'Probleme', path: '/problems' },
   { name: 'Documente', path: '/documents' },
   { name: 'Clasament', path: '/board' },
-  { name: 'Verificare solutii', path: '/plagiarism', adminOnly: true },
+  { name: 'Verificare soluții', path: '/plagiarism', adminOnly: true },
 ];
 
 function ResponsiveAppBar() {
@@ -70,6 +70,9 @@ function ResponsiveAppBar() {
     const userData = fetchUserData();
     if (userData.role === 'admin') {
       setIsAdmin(true);
+    }
+    if (userData.role === 'user') {
+      setIsAdmin(false);
     }
 
     if (isAuthenticated) {
@@ -125,7 +128,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component={Link}
-            to="/"
+            to="/home" // Changed from "/" to "/home"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -136,7 +139,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            My Site
+            Home
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -185,7 +188,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component={Link}
-            to="/"
+            to="/home" // Changed from "/" to "/home"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -197,7 +200,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            My Site
+            Home
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

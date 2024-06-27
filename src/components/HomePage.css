@@ -1,45 +1,122 @@
-.container {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Example font */
+
+.homepage {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  background-color: #282a36; /* Dark background similar to Dracula theme */
+  color: #f8f8f2; /* Light text color */
+}
+
+.homepage .homepage-header {
+  background-color: #44475a; /* Darker grey for the header */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #f8f8f2; /* Light text color */
   padding: 20px;
 }
 
-.problem-list {
+.homepage .content {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  align-items: flex-start; /* Align items to the start to allow text to take more space */
+  justify-content: center; /* Center the entire content */
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1600px; /* Increase max width to allow more space */
 }
 
-.problem-card {
-  padding: 15px;
-  border: 1px solid #666; /* Darker grey border */
-  border-radius: 8px;
-  background-color: #333; /* Dark grey background */
-  color: #f0f0f0; /* Light grey text color */
+.homepage .left-text, .homepage .right-text {
+  flex: 1; /* Equal flex for both left and right text */
+  padding: 20px;
+  color: #f8f8f2; /* Light text color */
+  font-size: 16px; /* Adjusted for better readability */
+  max-width: 30%; /* Ensure text boxes have a maximum width */
+  background-color: #44475a; /* Dark grey background for text sections */
+  border-radius: 8px; /* Rounded corners for text sections */
+  border: 1px solid #6272a4; /* Add border with a color similar to the header */
+  margin: 0 20px; /* Add margin between the sections */
 }
 
-.problem-link {
-  text-decoration: none;
-  color: inherit;
+.homepage .left-text h2, .homepage .right-text h2 {
+  color: #50fa7b; /* Green color similar to code editor functions */
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.problem-link h2 {
-  margin: 0;
-  padding: 0;
+.homepage .animation-container {
+  display: flex;
+  justify-content: center; /* Center the main animation */
+  align-items: center;
+  flex: 2; /* Increase flex for the main animation to occupy more space */
+  margin: 0 20px; /* Add margin between the sections */
 }
 
-/* Styles for the "Create Problem" button */
-.create-problem-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  color: white;
-  background-color: #1976d2;
-  border: none;
+.homepage h1 {
+  margin: 20px;
+  color: #f8f8f2; /* Light text color for h1 */
+}
+
+.homepage h1:first-of-type {
+  font-size: 36px; /* Keep the first h1 bigger */
+  font-weight: 700;
+  color: #ff79c6; /* Pink color for the first h1, similar to code editor keywords */
+}
+
+.homepage h1:nth-of-type(2) {
+  font-size: 18px; /* Make the second h1 smaller */
+  font-weight: 400;
+  color: #8be9fd; /* Cyan color for the second h1, similar to code editor strings */
+}
+
+/* Adjust the size of the Lottie animation */
+.homepage .lottie-animation {
+  max-width: 100%;
+  max-height: 100%;
+  width: 50vw; /* Adjust the size as needed */
+  height: 70vh;
+  margin: 0 auto;
+}
+
+.homepage .small-animations {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.homepage .small-animations .lottie-animation {
+  width: 20vw; /* Adjust the size of the small animations as needed */
+  height: 20vh;
+}
+
+/* Add some styling for code-like text */
+.homepage code {
+  background-color: #44475a; /* Background for code blocks */
+  color: #f1fa8c; /* Yellow color for code */
+  padding: 2px 4px;
   border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+}
+
+/* Add styles for the start button */
+.start-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f8f8f2; /* Light text color */
+  background-color: #50fa7b; /* Green background color */
+  border: none;
+  border-radius: 8px;
+  text-decoration: none; /* Remove underline from link */
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-bottom: 20px; /* Add some space below the button */
 }
 
-.create-problem-button:hover {
-  background-color: #005bb5;
+.start-button:hover {
+  background-color: #45e66c; /* Darken the green on hover */
 }

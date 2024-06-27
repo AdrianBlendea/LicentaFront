@@ -1,3 +1,5 @@
+/* Updated board.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * > * {
@@ -23,8 +25,8 @@
     height: 100vh; /* Full screen height */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding-top: 2em; /* Add padding to move content down */
 }
 
 .board .leaderboard {
@@ -56,7 +58,7 @@
 }
 
 #profile {
-    margin-top: 3em;
+    margin-top: 1em; /* Reduced margin to move content up */
     width: 100%; /* Ensure it takes full width */
     max-height: 60vh; /* Adjust as needed to control visible height */
     overflow-y: auto; /* Enable vertical scrolling if needed */

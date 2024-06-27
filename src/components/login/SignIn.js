@@ -64,11 +64,7 @@ function SignInForm() {
 
       // Salvează datele utilizatorului și token-ul în local storage
       login(data);
-      if (data.role === "user") {
-        navigate('/user');
-      } else {
-        navigate('/admin');
-      }
+      navigate('/home')
     })
     .catch((error) => {
       console.error('Error:', error);

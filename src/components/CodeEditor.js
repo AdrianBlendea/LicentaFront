@@ -52,12 +52,12 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
     setStdinEnabled(!stdinEnabled); // Toggle the state
   };
 
-  const runCode = async (currentCode) => {
+  const runCode = async (currentCode, input1) => {
     setLoading(true);
     try {
       const response = await axios.post('https://onecompiler-apis.p.rapidapi.com/api/v1/run', {
         language: language,
-        stdin: input, // Pass input value to the code execution
+        stdin: input1, // Pass input value to the code execution
         files: [
           {
             name: getFileName(language),
@@ -71,7 +71,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
           'X-RapidAPI-Host': 'onecompiler-apis.p.rapidapi.com'
         }
       });
-
+  
       const data = response.data;
       if (data.stdout) {
         setOutput(data.stdout);
@@ -79,11 +79,16 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
         setOutput(data.stderr || 'Error executing code');
       }
       setIsCodeRun(true); // Set the code run state to true after successful execution
+      setLoading(false);
+      return response.data;
     } catch (error) {
       setOutput('Error executing code');
     }
     setLoading(false);
   };
+
+  
+  
 
   const fetchTestCases = async () => {
     try {
@@ -129,14 +134,15 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
       const { input: testCaseInput, expectedOutput } = testCase;
 
       // Set input for the current test case
-      setInput(testCaseInput);
-
+      //setInput(testCaseInput);
+      
       // Run the code
-      await runCode(code);
+      const data =  await runCode(code, testCaseInput);
+   
 
       // Check if the actual output matches the expected output
-      const actualOutput = output.trim();
-      const testPassed = actualOutput === expectedOutput.trim();
+      const actualOutput = data.stdout;
+      const testPassed = actualOutput.trim() === expectedOutput.trim();
       testsPassed = testsPassed && testPassed;
 
       // After running the code, push the test result to results array
@@ -290,7 +296,7 @@ int main() {
         </select>
       </div>
       <div className="run-button-container">
-        <button className="run-button" onClick={() => runCode(code)} disabled={loading || !canYouRun}>Run Code</button>
+        <button className="run-button" onClick={() => runCode(code, input)} disabled={loading || !canYouRun}>Run Code</button>
         <button className="run-button run-test-button" onClick={runTestCases} disabled={loading || !isCodeRun}>Run Test Cases</button>
         <button className="run-button submit-button" onClick={submitSolution} disabled={!allTestsPassed || !isCodeRun}>Submit Solution</button>
         <button className="run-button delete-solution-button" onClick={deleteSolution} disabled={deleteButonDisabled || loading}>Delete solution</button>

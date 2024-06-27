@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import { useState, useEffect, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,6 +26,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('userData', JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
+    navigate('/problems'); // Navigate to protected route after login
   };
 
   const logout = () => {

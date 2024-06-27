@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Tabs, Tab, Box, List, ListItem, ListItemText, ListItemIcon, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download'; // Import DownloadIcon
 import { useAuth } from '../AuthContext';
@@ -15,9 +14,6 @@ function DocumentTabs({ categories }) {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [documentsByCategory, setDocumentsByCategory] = useState({});
-  const [selectedDocumentUrl, setSelectedDocumentUrl] = useState('');
-  const [selectedDocumentType, setSelectedDocumentType] = useState('');
-  const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
   const [documentToDelete, setDocumentToDelete] = useState(null); // State to store document to delete
   const [dialogMessage, setDialogMessage] = useState(''); // State to store dialog message
@@ -85,38 +81,6 @@ function DocumentTabs({ categories }) {
     }
   };
 
-  const handlePreviewClick = async (documentId, documentName) => {
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
-
-    try {
-      const userData = localStorage.getItem('userData');
-      let token = '';
-
-      if (userData) {
-        const parsedData = JSON.parse(userData);
-        token = parsedData.token;
-      }
-
-      const response = await axios.get(`http://localhost:8080/documents/${documentId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        responseType: 'blob',
-      });
-
-      const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
-      setSelectedDocumentUrl(url);
-      setSelectedDocumentType(documentName.split('.').pop().toLowerCase());
-      setOpen(true);
-    } catch (error) {
-      console.error('Error fetching document:', error);
-      alert('Failed to fetch document');
-    }
-  };
-
   const handleOpenDialog = (documentId) => {
     setDocumentToDelete(documentId);
     setDialogMessage('Esti sigur ca vrei sa stergi acest document?'); // Set the custom message
@@ -159,30 +123,6 @@ function DocumentTabs({ categories }) {
     }
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    URL.revokeObjectURL(selectedDocumentUrl);
-  };
-
-  const renderPreview = () => {
-    if (selectedDocumentType === 'pdf') {
-      return <iframe src={selectedDocumentUrl} width="100%" height="600px" title="Document Preview"></iframe>;
-    } else if (selectedDocumentType === 'jpg' || selectedDocumentType === 'jpeg' || selectedDocumentType === 'png' || selectedDocumentType === 'gif') {
-      return <img src={selectedDocumentUrl} alt="Document Preview" style={{ width: '100%' }} />;
-    } else if (selectedDocumentType === 'doc' || selectedDocumentType === 'docx') {
-      return (
-        <iframe
-          src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(selectedDocumentUrl)}`}
-          width="100%"
-          height="600px"
-          title="Document Preview"
-        ></iframe>
-      );
-    } else {
-      return <div>Preview not available for this file type</div>;
-    }
-  };
-
   return (
     <Paper elevation={3}>
       <Box display="flex" justifyContent="center">
@@ -211,9 +151,6 @@ function DocumentTabs({ categories }) {
               />
               {isAuthenticated && (
                 <div className="button-container">
-                  <IconButton className="icon-button" aria-label="preview" onClick={() => handlePreviewClick(document.id, document.name)}>
-                    <VisibilityIcon />
-                  </IconButton>
                   <IconButton className="icon-button" aria-label="download" onClick={() => handleDownloadClick(document.id, document.name)}>
                     <DownloadIcon />
                   </IconButton>
@@ -231,17 +168,6 @@ function DocumentTabs({ categories }) {
           ))}
         </List>
       </Box>
-      <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
-        <DialogTitle>Document Preview</DialogTitle>
-        <DialogContent>
-          {renderPreview()}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
       <ConfirmationDialog
         open={openDialog}
         onClose={handleCloseDialog}
