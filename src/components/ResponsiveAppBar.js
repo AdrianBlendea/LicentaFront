@@ -21,14 +21,15 @@ const pages = [
   { name: 'Probleme', path: '/home' },
   { name: 'Documente', path: '/documents' },
   { name: 'Clasament', path: '/board' },
+  { name: 'Verificare solutii', path: '/plagiarism', adminOnly: true },
 ];
-
 
 function ResponsiveAppBar() {
   const { isAuthenticated, logout } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [profilePicture, setProfilePicture] = React.useState(UserIcon); // Default to UserIcon
+  const [isAdmin, setIsAdmin] = React.useState(false);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -37,6 +38,7 @@ function ResponsiveAppBar() {
       return {
         id: userData.id || '',
         token: userData.token || '',
+        role: userData.role || '',
       };
     };
 
@@ -64,6 +66,11 @@ function ResponsiveAppBar() {
         setProfilePicture(UserIcon); // Use default icon in case of an error
       }
     };
+
+    const userData = fetchUserData();
+    if (userData.role === 'admin') {
+      setIsAdmin(true);
+    }
 
     if (isAuthenticated) {
       fetchProfilePicture();
@@ -129,7 +136,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            MyApp
+            My Site
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -162,12 +169,14 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem
-                  key={page.name}
-                  onClick={() => handlePageClick(page.path)}
-                >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
+                (!page.adminOnly || isAdmin) && (
+                  <MenuItem
+                    key={page.name}
+                    onClick={() => handlePageClick(page.path)}
+                  >
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                )
               ))}
             </Menu>
           </Box>
@@ -192,13 +201,15 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={() => handlePageClick(page.path)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.name}
-              </Button>
+              (!page.adminOnly || isAdmin) && (
+                <Button
+                  key={page.name}
+                  onClick={() => handlePageClick(page.path)}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page.name}
+                </Button>
+              )
             ))}
           </Box>
 

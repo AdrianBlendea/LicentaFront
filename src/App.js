@@ -8,6 +8,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import LoginPage from './components/login/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage.tsx';
 import Board from './components/LeaderBoardPage/board.js';
+import Plagiarism from './components/PlagiarismPage.js';
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         <Route path="/editor/:problemId" element={<EditorPage />} />
         <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/board" element={<Board/>} />
+        <Route path="/plagiarism" element={<Plagiarism/>} />
+      
       </Routes>
     </div>
   );
