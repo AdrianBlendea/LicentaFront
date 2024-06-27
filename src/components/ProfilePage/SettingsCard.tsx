@@ -74,7 +74,6 @@ const SettingsCard: React.FC<SettingsCardProps> = ({ expose }) => {
         indicatorColor="secondary"
       >
         <Tab value="one" label="Account" />
-        <Tab value="two" label="Settings" />
       </Tabs>
       <Divider />
 
@@ -140,15 +139,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({ expose }) => {
                   item
                   xs={6}
                 >
-                  <Button
-                    sx={{ p: "1rem 2rem", my: 2, height: "3rem" }}
-                    size="large"
-                    variant="contained"
-                    color="secondary"
-                    onClick={changeButton}
-                  >
-                    {edit.isEdit === false ? "UPDATE" : "EDIT"}
-                  </Button>
+              
                 </Grid>
               </Grid>
             </FormControl>

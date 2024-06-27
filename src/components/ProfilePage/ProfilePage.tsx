@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ProfileCard from "./ProfileCard.tsx";
 import SettingsCard from "./SettingsCard.tsx";
-import CustomInput from "./CustomInput.tsx";
+
 // FONTS
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";

@@ -153,8 +153,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
   const setDefaultCode = (language) => {
     switch (language) {
       case 'python':
-        setCode(`# Python program
-def main():
+        setCode(`def main():
     print("Hello, Python!")
 
 if __name__ == "__main__":
@@ -162,8 +161,7 @@ if __name__ == "__main__":
 `);
         break;
       case 'cpp':
-        setCode(`// C++ program
-#include <iostream>
+        setCode(`#include <iostream>
 
 int main() {
     std::cout << "Hello, C++!" << std::endl;
@@ -172,8 +170,7 @@ int main() {
 `);
         break;
       case 'java':
-        setCode(`// Java program
-public class Main {
+        setCode(`public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, Java!");
     }
@@ -332,7 +329,7 @@ public class Main {
           <ul>
             {testResults.map((result, index) => (
               <li key={index} className={result.testPassed ? 'passed' : 'failed'}>
-                Test Case {result.id}: {result.testPassed ? 'Passed' : 'Failed'}
+                Test Case : {result.testPassed ? 'Passed' : 'Failed'}
                 <br />
                 <span>Expected: {result.expectedOutput}</span><br />
                 <span>Actual: {result.actualOutput}</span>
