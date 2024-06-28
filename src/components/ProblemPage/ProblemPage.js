@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BasicTabs from './BasicTabs'; // Import the BasicTabs component
-import CreateProblemDialog from './CreateProblemDialog'; // Import the CreateProblemDialog component
+import CreateProblemDialog from '../Dialogs/CreateProblemDialog'; // Import the CreateProblemDialog component
 import './ProblemPage.css';
 
 const ProblemPage = () => {

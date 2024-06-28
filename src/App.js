@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import ProblemPage from './components/ProblemPage.js';
-import EditorPage from './components/EditorPage';
+import ProblemPage from './components/ProblemPage/ProblemPage.js';
+import EditorPage from './components/EditorPage/EditorPage.js';
 import DocumentPage from './components/DocumentPage/DocumentPage';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
-import LoginPage from './components/login/LoginPage';
+import LoginPage from './components/LoginPage/LoginPage.js';
 import ProfilePage from './components/ProfilePage/ProfilePage.tsx';
 import Board from './components/LeaderBoardPage/board.js';
-import Plagiarism from './components/PlagiarismPage.js';
-import Homepage from './components/Homepage.js';
+import Plagiarism from './components/PlagiarismTool/PlagiarismPage.js';
+import Homepage from './components/HomePage/HomePage.js';
 import { AuthProvider } from './components/AuthContext'; // Adjust the import path as needed
 import PrivateRoute from './components/PrivateRoute'; // Adjust the import path as needed
 

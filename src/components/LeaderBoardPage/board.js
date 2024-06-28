@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Profiles from './profiles';
 import axios from 'axios';
 import "./board.css";
-import userIcon from '../userIcon.png';
+import userIcon from '../Images/userIcon.png';
 
 export default function Board() {
   const [period, setPeriod] = useState(0);

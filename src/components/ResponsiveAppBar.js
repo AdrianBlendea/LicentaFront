@@ -12,8 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
-import SiteIcon from './siteIcon.png';
-import UserIcon from './userIcon.png'; // Import the default user icon
+import SiteIcon from './Images/siteIcon.png';
+import UserIcon from './Images/userIcon.png'; // Import the default user icon
 import { useAuth } from './AuthContext';
 import axios from 'axios';
 

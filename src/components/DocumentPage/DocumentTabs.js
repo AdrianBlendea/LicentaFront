@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download'; // Import DownloadIcon
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import ConfirmationDialog from '../ConfirmationDialog'; // Import the ConfirmationDialog component
+import ConfirmationDialog from '../Dialogs/ConfirmationDialog'; // Import the ConfirmationDialog component
 import './DocumentTabs.css'; // Add your custom CSS here
 
 function DocumentTabs({ categories }) {
