@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Slider from '@mui/material/Slider'; // Import the Slider component
 import axios from 'axios';
 
 function CreateProblemDialog({ open, onClose, onProblemCreated }) {
@@ -16,6 +17,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
   const [testList, setTestList] = useState([{ input: '', expectedOutput: '' }]);
   const [types, setTypes] = useState([]);
   const [selectedType, setSelectedType] = useState('');
+  const [procentToPass, setProcentToPass] = useState(50); // State for percentage to pass
 
   useEffect(() => {
     const userData = localStorage.getItem('userData');
@@ -70,7 +72,8 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
         name,
         requirement,
         typeId: selectedType,
-        testList
+        testList,
+        procentToPass // Include percentToPass in the DTO
       };
 
       axios.post('http://localhost:8080/api/problem/create', newProblem, {
@@ -122,6 +125,19 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
             </MenuItem>
           ))}
         </Select>
+        <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+          <label>Percentage to Pass: {procentToPass}%</label>
+          <Slider
+            value={procentToPass}
+            onChange={(e, newValue) => setProcentToPass(newValue)}
+            aria-labelledby="continuous-slider"
+            valueLabelDisplay="auto"
+            step={1}
+            marks
+            min={0}
+            max={100}
+          />
+        </div>
         {testList.map((test, index) => (
           <div key={index} style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
             <TextField

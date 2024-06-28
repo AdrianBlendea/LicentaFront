@@ -40,7 +40,7 @@ body {
   background-color: #444; /* Set background color to a slightly lighter dark grey than the top-box */
   color: #f0f0f0; /* Set text color to a light grey */
   position: absolute; /* Set position to absolute */
-  bottom: 7vh; /* Distance from the bottom, 5% of the viewport height */
+  bottom: 8vh; /* Distance from the bottom, 5% of the viewport height */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center horizontally */
   overflow: auto; /* Add scrollbars if needed */

@@ -12,6 +12,7 @@ const EditorPage = () => {
   const [solution, setSolution] = useState('');
   const [language, setLanguage] = useState('java'); // Default language
   const [solvedProblem, setSolvedProblem] = useState(false);
+  const [solutionProcent, setSolutionProcent] = useState(0);
 
   useEffect(() => {
     const fetchProblemRequirement = async () => {
@@ -50,10 +51,11 @@ const EditorPage = () => {
               problemId: problemId
             }
           });
-          const { solution, language } = solutionResponse.data;
+          const { solution, language, procentScored } = solutionResponse.data;
           setSolution(solution);
           setLanguage(language);
           setSolvedProblem(true);
+          setSolutionProcent(procentScored);
         }
 
         setIsLoading(false);
@@ -80,7 +82,7 @@ const EditorPage = () => {
         <p>{problemRequirement}</p>
       </div>
       <div className="editor-box">
-        <CodeEditor initialCode={solution} initialLanguage={language} solved={solvedProblem}/>
+        <CodeEditor initialCode={solution} initialLanguage={language} solved={solvedProblem} solutionPercent = {solutionProcent}/>
       </div>
     </div>
   );
