@@ -1,0 +1,46 @@
+.container {
+    padding: 20px;
+  }
+  
+  .problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .problem-card {
+    padding: 15px;
+    border: 1px solid #666; /* Darker grey border */
+    border-radius: 8px;
+    background-color: #333; /* Dark grey background */
+    color: #f0f0f0; /* Light grey text color */
+  }
+  
+  .problem-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .problem-link h2 {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Styles for the "Create Problem" button */
+  .create-problem-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: #1976d2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px; /* Add some space below the button */
+  }
+  
+  .create-problem-button:hover {
+    background-color: #005bb5;
+  }
+  

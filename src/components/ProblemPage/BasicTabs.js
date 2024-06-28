@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import ConfirmationDialog from './ConfirmationDialog'; // Import the new component
+import ConfirmationDialog from '../Dialogs/ConfirmationDialog'; // Import the new component
 import './BasicTabs.css';
 
 function CustomTabPanel(props) {

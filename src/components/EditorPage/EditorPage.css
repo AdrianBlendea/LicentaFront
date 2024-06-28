@@ -10,7 +10,7 @@ body {
   position: relative; /* Set position to relative */
   min-height: 100vh; /* Ensure the page takes the full height of the viewport */
   padding: 20px; /* Add padding to space out the content */
-  background-image: url('./background.jpg'); /* Add your background image */
+  background-image: url('../Images/background.jpg'); /* Add your background image */
   background-size: cover; /* Ensure the image covers the entire background */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */

@@ -1,5 +1,5 @@
 import React from 'react';
-import userIcon from '../userIcon.png';
+import userIcon from '../Images/userIcon.png';
 
 export default function Profiles({ Leaderboard }) {
   return (

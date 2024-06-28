@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link
-import LottieAnimation from '../components/LottieAnimation';
-import mainAnimationData from './homeanimation.json'; // Main animation data
-import pythonanimation from './pythonanimation.json'; // Small animation data 1
-import javaanimation from './javaanimation.json'; // Small animation data 2
-import canimation from './canimation.json'; // Small animation data 3
+import LottieAnimation from '../animations/LottieAnimation';
+import mainAnimationData from '../animations/homeanimation.json'; // Main animation data
+import pythonanimation from '../animations/pythonanimation.json'; // Small animation data 1
+import javaanimation from '../animations/javaanimation.json'; // Small animation data 2
+import canimation from '../animations/canimation.json'; // Small animation data 3
 import './HomePage.css';
 
 const Homepage = () => {
