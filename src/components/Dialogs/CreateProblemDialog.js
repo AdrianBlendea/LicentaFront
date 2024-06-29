@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Slider from '@mui/material/Slider'; // Import the Slider component
+import Slider from '@mui/material/Slider';
 import axios from 'axios';
 
 function CreateProblemDialog({ open, onClose, onProblemCreated }) {
@@ -18,6 +18,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
   const [types, setTypes] = useState([]);
   const [selectedType, setSelectedType] = useState('');
   const [procentToPass, setProcentToPass] = useState(50); // State for percentage to pass
+  const [formValid, setFormValid] = useState(false); // State to track form validity
 
   useEffect(() => {
     const userData = localStorage.getItem('userData');
@@ -44,6 +45,18 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
       console.error('There was an error fetching the types!', error);
     });
   }, []);
+
+  useEffect(() => {
+    validateForm();
+  }, [selectedType, testList]);
+
+  const validateForm = () => {
+    // Check if selectedType is valid and there is at least one test
+    const isSelectedTypeValid = selectedType !== '';
+    const isTestListValid = testList.length > 0 && testList.some(test => test.input.trim() !== '' || test.expectedOutput.trim() !== '');
+
+    setFormValid(isSelectedTypeValid && isTestListValid);
+  };
 
   const handleAddTest = () => {
     setTestList([...testList, { input: '', expectedOutput: '' }]);
@@ -174,7 +187,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
         <Button onClick={onClose} color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleCreate} color="primary">
+        <Button onClick={handleCreate} color="primary" disabled={!formValid || testList.length === 0}>
           Create
         </Button>
       </DialogActions>
