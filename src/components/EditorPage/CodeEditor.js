@@ -3,8 +3,10 @@ import MonacoEditor from "@monaco-editor/react";
 import axios from 'axios';
 import Switch from '@mui/material/Switch';
 import './CodeEditor.css'; // Import CSS file for styling
+import Paper from '@mui/material/Paper';
 
-const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false }) => {
+
+const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false, solutionPercent = 0 ,}) => {
   const [code, setCode] = useState('');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -17,20 +19,27 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
   const [allTestsPassed, setAllTestsPassed] = useState(false); // State to track if all tests passed
   const [readOnly, setReadOnly] = useState(false);
   const [canYouRun, setCanYouRun] = useState(true); // State to track if the code has been run after changes
-  const [deleteButonDisabled,  setDeleteButonDisabled] = useState(true);
+  const [deleteButonDisabled, setDeleteButonDisabled] = useState(true);
+  const [percentToPass, setPercentToPass] = useState(50); // Required percentage of tests to pass
+  const [percentPassed, setPercentPassed] = useState(0); // Percentage of tests passed
+  const [paperText, setPaperText] = useState('');
+  const [isPaperVisible, setIsPaperVisible] = useState(false);
+
+
 
   useEffect(() => {
-    if(solved == false)
-    setDefaultCode(language);
+    if (solved === false) setDefaultCode(language);
   }, [language]);
 
   useEffect(() => {
-    if(solved === true){
-    setCode(initialCode);
+    if (solved === true) {
+      setCode(initialCode);
       setLanguage(initialLanguage);
-     setReadOnly(true);
-     setCanYouRun(false);
-     setDeleteButonDisabled(false);
+      setReadOnly(true);
+      setCanYouRun(false);
+      setDeleteButonDisabled(false);
+      setIsPaperVisible(true);
+      setPaperText("Solutia ta a trecut un procent de " + solutionPercent +"% din teste.");
     }
   }, [initialCode, initialLanguage]);
 
@@ -52,6 +61,9 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
     setStdinEnabled(!stdinEnabled); // Toggle the state
   };
 
+
+  
+
   const runCode = async (currentCode, input1) => {
     setLoading(true);
     try {
@@ -71,7 +83,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
           'X-RapidAPI-Host': 'onecompiler-apis.p.rapidapi.com'
         }
       });
-  
+
       const data = response.data;
       if (data.stdout) {
         setOutput(data.stdout);
@@ -86,9 +98,6 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
     }
     setLoading(false);
   };
-
-  
-  
 
   const fetchTestCases = async () => {
     try {
@@ -127,7 +136,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
     }
 
     const results = [];
-    let testsPassed = true;
+    let testsPassed = 0;
 
     for (let i = 0; i < testCases.length; i++) {
       const testCase = testCases[i];
@@ -135,26 +144,26 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
 
       // Set input for the current test case
       //setInput(testCaseInput);
-      
+
       // Run the code
-      const data =  await runCode(code, testCaseInput);
-   
+      const data = await runCode(code, testCaseInput);
 
       // Check if the actual output matches the expected output
       const actualOutput = data.stdout;
       const testPassed = actualOutput.trim() === expectedOutput.trim();
-      testsPassed = testsPassed && testPassed;
+      if (testPassed) {
+        testsPassed++;
+      }
 
       // After running the code, push the test result to results array
       results.push({ ...testCase, actualOutput, testPassed });
     }
 
-    // After all test cases have been executed, update the testResults state
+    const percentPassed = (testsPassed / testCases.length) * 100;
+    setPercentPassed(percentPassed);
     setTestResults(results);
-    setAllTestsPassed(testsPassed); // Update allTestsPassed state
+    setAllTestsPassed(percentPassed >= percentToPass); // Update allTestsPassed state based on percentPassed
   };
-
- 
 
   const setDefaultCode = (language) => {
     switch (language) {
@@ -220,9 +229,8 @@ int main() {
       }
 
       const problemId = window.location.pathname.split('/').pop();
-    
 
-      await axios.delete('http://localhost:8080/solution/delete',  {
+      await axios.delete('http://localhost:8080/solution/delete', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Add the token to the Authorization header
@@ -237,7 +245,7 @@ int main() {
       window.location.reload();
     } catch (error) {
       console.error('Error to delete solution:', error);
-      alert('Failed to deletesolution');
+      alert('Failed to delete solution');
     }
   };
 
@@ -258,7 +266,8 @@ int main() {
         solution: code,
         userId: userId,
         problemId: problemId,
-        language: language
+        language: language,
+        procentScored: percentPassed // Add the percentage of tests that actually passed
       };
 
       await axios.post('http://localhost:8080/solution/submit', solutionDTO, {
@@ -277,75 +286,87 @@ int main() {
   };
 
   return (
-    <div className="code-editor-container">
-      <div className="language-select-container">
-        <label htmlFor="language-select">Select Language: </label>
-        <select id="language-select" value={language} onChange={handleLanguageChange} enabled >
-          <option value="python">Python</option>
-          <option value="cpp">C++</option>
-          <option value="java">Java</option>
-          {/* Add more options for other languages if needed */}
-        </select>
-      </div>
-      <div className="theme-select-container">
-        <label htmlFor="theme-select">Select Theme: </label>
-        <select id="theme-select" value={theme} onChange={handleThemeChange}>
-          <option value="vs-dark">Dark</option>
-          <option value="vs-light">Light</option>
-          <option value="hc-black">High Contrast Dark</option>
-        </select>
-      </div>
-      <div className="run-button-container">
-        <button className="run-button" onClick={() => runCode(code, input)} disabled={loading || !canYouRun}>Run Code</button>
-        <button className="run-button run-test-button" onClick={runTestCases} disabled={loading || !isCodeRun}>Run Test Cases</button>
-        <button className="run-button submit-button" onClick={submitSolution} disabled={!allTestsPassed || !isCodeRun}>Submit Solution</button>
-        <button className="run-button delete-solution-button" onClick={deleteSolution} disabled={deleteButonDisabled || loading}>Delete solution</button>
-      </div>
-      <div className="editor-container">
-        <MonacoEditor
-          width="900"
-          height="41vh"
-          language={language} // Use the selected language
-          theme={theme} // Use the selected theme
-          value={code}
-          options={{
-            //automaticLayout: true,
-            readOnly:readOnly,
-            minimap: { enabled: false }, // Disable minimap
-            suggest: true, // Enable code suggestions (code completion)
-            wordWrap: 'on', // Enable word wrapping
-            fontFamily: '"Fira Code", "Courier New", monospace', // Custom font family
-            fontSize: 16, // Custom font size
-          }}
-          onChange={handleCodeChange}
-        />
-      </div>
-      <div className="stdin-container">
-        <label htmlFor="stdin">Input (stdin):</label>
-        <input type="text" id="stdin" value={input} onChange={handleInputChange} disabled={!stdinEnabled} />
-        <Switch checked={stdinEnabled} onChange={toggleStdin} inputProps={{ 'aria-label': 'Enable Stdin' }} />
-      </div>
-      <div>
-        <h2>Output:</h2>
-        {loading ? <p>Loading...</p> : <pre style={{ fontSize: '18px' }}>{output}</pre>}
-      </div>
-      {testResults && (
-        <div>
-          <h2>Test Results:</h2>
-          <ul>
-            {testResults.map((result, index) => (
-              <li key={index} className={result.testPassed ? 'passed' : 'failed'}>
-                Test Case : {result.testPassed ? 'Passed' : 'Failed'}
-                <br />
-                <span>Expected: {result.expectedOutput}</span><br />
-                <span>Actual: {result.actualOutput}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+  <div className="code-editor-container">
+    <div className="language-select-container">
+      <label htmlFor="language-select">Select Language: </label>
+      <select id="language-select" value={language} onChange={handleLanguageChange} enabled >
+        <option value="python">Python</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+        {/* Add more options for other languages if needed */}
+      </select>
     </div>
-  );
+    <div className="theme-select-container">
+      <label htmlFor="theme-select">Select Theme: </label>
+      <select id="theme-select" value={theme} onChange={handleThemeChange}>
+        <option value="vs-dark">Dark</option>
+        <option value="vs-light">Light</option>
+        <option value="hc-black">High Contrast Dark</option>
+      </select>
+    </div>
+    <div className="run-button-container">
+      <button className="run-button" onClick={() => runCode(code, input)} disabled={loading || !canYouRun}>Run Code</button>
+      <button className="run-button run-test-button" onClick={runTestCases} disabled={loading || !isCodeRun}>Run Test Cases</button>
+      <button className="run-button submit-button" onClick={submitSolution} disabled={percentPassed < percentToPass || !isCodeRun}>Submit Solution</button>
+      <button className="run-button delete-solution-button" onClick={deleteSolution} disabled={deleteButonDisabled || loading}>Delete solution</button>
+    </div>
+    <div className="editor-container">
+      <MonacoEditor
+        width="900"
+        height="41vh"
+        language={language} // Use the selected language
+        theme={theme} // Use the selected theme
+        value={code}
+        options={{
+          //automaticLayout: true,
+          readOnly:readOnly,
+          minimap: { enabled: false }, // Disable minimap
+          suggest: true, // Enable code suggestions (code completion)
+          wordWrap: 'on', // Enable word wrapping
+          fontFamily: '"Fira Code", "Courier New", monospace', // Custom font family
+          fontSize: 16, // Custom font size
+        }}
+        onChange={handleCodeChange}
+      />
+    </div>
+    <div className="stdin-container">
+      <label htmlFor="stdin">Input (stdin):</label>
+      <input type="text" id="stdin" value={input} onChange={handleInputChange} disabled={!stdinEnabled} />
+      <Switch checked={stdinEnabled} onChange={toggleStdin} inputProps={{ 'aria-label': 'Enable Stdin' }} />
+    </div>
+    <div>
+      <h2>Output:</h2>
+      {loading ? <p>Loading...</p> : <pre style={{ fontSize: '18px' }}>{output}</pre>}
+    </div>
+    {testResults && (
+      <div>
+        <h2>Test Results:</h2>
+        <ul>
+          {testResults.map((result, index) => (
+            <li key={index} className={result.testPassed ? 'passed' : 'failed'}>
+              Test Case : {result.testPassed ? 'Passed' : 'Failed'}
+              <br />
+              <span>Expected: {result.expectedOutput}</span><br />
+              <span>Actual: {result.actualOutput}</span>
+            </li>
+          ))}
+        </ul>
+        {percentPassed < percentToPass && (
+          <p>{`You need to pass at least ${percentToPass}% of the tests. You passed ${percentPassed.toFixed(2)}%.`}</p>
+        )}
+        {solved && (
+          <div>
+            <p>{`You scored ${percentPassed.toFixed(2)}%.`}</p>
+          </div>
+        )}
+      </div>
+    )}
+   <Paper className={`paper-container ${isPaperVisible ? '' : 'invisible'}`} elevation={3}>
+  {paperText}
+</Paper>
+  </div>
+);
+
 };
 
 export default CodeEditor;
