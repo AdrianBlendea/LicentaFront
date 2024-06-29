@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('userData', JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
-    navigate('/problems'); // Navigate to protected route after login
+    navigate('/home'); // Navigate to protected route after login
   };
 
   const logout = () => {
