@@ -139,7 +139,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Home
+            Despre
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

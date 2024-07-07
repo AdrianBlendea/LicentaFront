@@ -73,7 +73,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({ expose }) => {
         textColor="secondary"
         indicatorColor="secondary"
       >
-        <Tab value="one" label="Account" />
+        <Tab value="one" label="Cont" />
       </Tabs>
       <Divider />
 

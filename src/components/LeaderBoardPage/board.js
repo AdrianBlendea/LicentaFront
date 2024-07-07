@@ -32,7 +32,7 @@ export default function Board() {
 
   return (
     <div className="board">
-      <h1 className='leaderboard'>Clasament probleme rezolvate</h1>
+      <h1 className='leaderboard'>Clasament punctaje</h1>
 
       <div className="duration">
       </div>
