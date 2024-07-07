@@ -78,7 +78,7 @@ function DocumentUpload() {
       <h2>Incarca Document</h2>
       <input type="file" onChange={handleFileChange} />
       <BasicSelect value={selectedCategory} onChange={handleCategoryChange} categories={categories} />
-      <button className="upload-button" onClick={handleUpload}>Upload</button>
+      <button className="upload-button" onClick={handleUpload}>Încarcă document</button>
     </div>
   );
 }

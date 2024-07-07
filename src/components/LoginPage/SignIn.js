@@ -61,8 +61,6 @@ function SignInForm() {
     .then((data) => {
       setLoginMessage('Autentificare reușită');
       setLoginError(false);
-
-      // Salvează datele utilizatorului și token-ul în local storage
       login(data);
       navigate('/home')
     })

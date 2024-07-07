@@ -100,18 +100,18 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
         window.location.reload();
       })
       .catch(error => {
-        console.error('There was an error creating the problem!', error);
+        console.error('A aparut o problemă la crearea problemei', error);
       });
     }
   };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Create New Problem</DialogTitle>
+      <DialogTitle>Creează o problemă nouă</DialogTitle>
       <DialogContent>
         <TextField
           margin="dense"
-          label="Name"
+          label="titlu"
           type="text"
           fullWidth
           value={name}
@@ -119,7 +119,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
         />
         <TextField
           margin="dense"
-          label="Requirement"
+          label="cerință"
           type="text"
           fullWidth
           value={requirement}
@@ -139,7 +139,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
           ))}
         </Select>
         <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-          <label>Percentage to Pass: {procentToPass}%</label>
+          <label>Procentaj de teste pentru a rezolva problema: {procentToPass}%</label>
           <Slider
             value={procentToPass}
             onChange={(e, newValue) => setProcentToPass(newValue)}
@@ -154,14 +154,14 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
         {testList.map((test, index) => (
           <div key={index} style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
             <TextField
-              label={`Input ${index + 1}`}
+              label={`Date intrare ${index + 1}`}
               type="text"
               value={test.input}
               onChange={(e) => handleTestChange(index, 'input', e.target.value)}
               fullWidth
             />
             <TextField
-              label={`Expected Output ${index + 1}`}
+              label={`Rezultat așteptat ${index + 1}`}
               type="text"
               value={test.expectedOutput}
               onChange={(e) => handleTestChange(index, 'expectedOutput', e.target.value)}
@@ -174,21 +174,21 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
                 onClick={() => handleRemoveTest(index)}
                 style={{ alignSelf: 'center', marginLeft: '10px' }}
               >
-                Remove
+                Șterge
               </Button>
             )}
           </div>
         ))}
         <Button onClick={handleAddTest} color="primary">
-          Add Test
+          Adăugare test
         </Button>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">
-          Cancel
+          Anulare
         </Button>
         <Button onClick={handleCreate} color="primary" disabled={!formValid || testList.length === 0}>
-          Create
+          Creează
         </Button>
       </DialogActions>
     </Dialog>

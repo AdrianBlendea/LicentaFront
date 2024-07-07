@@ -174,7 +174,7 @@ export default function BasicTabs({ types }) {
                     onClick={() => handleOpenDialog(problem.id)}
                     className="delete-button"
                   >
-                    Delete
+                    Ștergere
                   </button>
                 )}
               </div>

@@ -69,7 +69,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
     try {
       const response = await axios.post('https://onecompiler-apis.p.rapidapi.com/api/v1/run', {
         language: language,
-        stdin: input1, // Pass input value to the code execution
+        stdin: input1, 
         files: [
           {
             name: getFileName(language),
@@ -88,13 +88,13 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
       if (data.stdout) {
         setOutput(data.stdout);
       } else {
-        setOutput(data.stderr || 'Error executing code');
+        setOutput(data.stderr || 'Eroare la executarea codului');
       }
       setIsCodeRun(true); // Set the code run state to true after successful execution
       setLoading(false);
       return response.data;
     } catch (error) {
-      setOutput('Error executing code');
+      setOutput('Eroare la executarea codului');
     }
     setLoading(false);
   };
@@ -288,7 +288,7 @@ int main() {
   return (
   <div className="code-editor-container">
     <div className="language-select-container">
-      <label htmlFor="language-select">Select Language: </label>
+      <label htmlFor="language-select">Alege limbajul: </label>
       <select id="language-select" value={language} onChange={handleLanguageChange} enabled >
         <option value="python">Python</option>
         <option value="cpp">C++</option>
@@ -297,7 +297,7 @@ int main() {
       </select>
     </div>
     <div className="theme-select-container">
-      <label htmlFor="theme-select">Select Theme: </label>
+      <label htmlFor="theme-select">Alege tema: </label>
       <select id="theme-select" value={theme} onChange={handleThemeChange}>
         <option value="vs-dark">Dark</option>
         <option value="vs-light">Light</option>
@@ -305,10 +305,10 @@ int main() {
       </select>
     </div>
     <div className="run-button-container">
-      <button className="run-button" onClick={() => runCode(code, input)} disabled={loading || !canYouRun}>Run Code</button>
-      <button className="run-button run-test-button" onClick={runTestCases} disabled={loading || !isCodeRun}>Run Test Cases</button>
-      <button className="run-button submit-button" onClick={submitSolution} disabled={percentPassed < percentToPass || !isCodeRun}>Submit Solution</button>
-      <button className="run-button delete-solution-button" onClick={deleteSolution} disabled={deleteButonDisabled || loading}>Delete solution</button>
+      <button className="run-button" onClick={() => runCode(code, input)} disabled={loading || !canYouRun}>Rulează cod</button>
+      <button className="run-button run-test-button" onClick={runTestCases} disabled={loading || !isCodeRun}>Rulează teste</button>
+      <button className="run-button submit-button" onClick={submitSolution} disabled={percentPassed < percentToPass || !isCodeRun}>Trimitere soluție</button>
+      <button className="run-button delete-solution-button" onClick={deleteSolution} disabled={deleteButonDisabled || loading}>Șterge soluție</button>
     </div>
     <div className="editor-container">
       <MonacoEditor
@@ -330,12 +330,12 @@ int main() {
       />
     </div>
     <div className="stdin-container">
-      <label htmlFor="stdin">Input (stdin):</label>
+      <label htmlFor="stdin">Intrare (stdin):</label>
       <input type="text" id="stdin" value={input} onChange={handleInputChange} disabled={!stdinEnabled} />
       <Switch checked={stdinEnabled} onChange={toggleStdin} inputProps={{ 'aria-label': 'Enable Stdin' }} />
     </div>
     <div>
-      <h2>Output:</h2>
+      <h2>Rezultat:</h2>
       {loading ? <p>Loading...</p> : <pre style={{ fontSize: '18px' }}>{output}</pre>}
     </div>
     {testResults && (
@@ -344,15 +344,15 @@ int main() {
         <ul>
           {testResults.map((result, index) => (
             <li key={index} className={result.testPassed ? 'passed' : 'failed'}>
-              Test Case : {result.testPassed ? 'Passed' : 'Failed'}
+              Caz de testare : {result.testPassed ? 'Reușit' : 'Eșuat'}
               <br />
-              <span>Expected: {result.expectedOutput}</span><br />
-              <span>Actual: {result.actualOutput}</span>
+              <span>Rezultat așteptat: {result.expectedOutput}</span><br />
+              <span>Rezultat adevărat: {result.actualOutput}</span>
             </li>
           ))}
         </ul>
         {percentPassed < percentToPass && (
-          <p>{`You need to pass at least ${percentToPass}% of the tests. You passed ${percentPassed.toFixed(2)}%.`}</p>
+          <p>{`Trebuie să treci cel puțin ${percentToPass}% din teste. Ai trecut ${percentPassed.toFixed(2)}%.`}</p>
         )}
         {solved && (
           <div>

@@ -42,10 +42,10 @@ const PlagiarismPage = () => {
 
     return (
         <div className="container">
-            <h1>Instrument de detectie a plagiarismului</h1>
+            <h1>Instrument de detecție a plagiatului</h1>
             {isAdmin && (
                 <button className="create-problem-button" onClick={handleOpenCreateDialog}>
-                    Deschide tool plagiarism
+                    Deschide instrument de detecție
                 </button>
             )}
             <BasicTabs types={types} problemsByType={problemsByType} />

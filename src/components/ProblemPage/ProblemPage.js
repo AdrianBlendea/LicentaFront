@@ -52,10 +52,10 @@ const ProblemPage = () => {
 
     return (
         <div className="container">
-            <h1>All Problems</h1>
+            <h1>Probleme</h1>
             {isAdmin && (
                 <button className="create-problem-button" onClick={handleOpenCreateDialog}>
-                    Create Problem
+                    Problemă nouă
                 </button>
             )}
             <BasicTabs types={types} problemsByType={problemsByType} />

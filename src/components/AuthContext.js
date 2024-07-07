@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('userData', JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
-    navigate('/home'); // Navigate to protected route after login
+    navigate('/home');  
   };
 
   const logout = () => {
@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
     setUser(null);
     localStorage.removeItem('userData');
     navigate('/login'); // Navigate to login page after logout
+    window.location.reload();
   };
 
   return (

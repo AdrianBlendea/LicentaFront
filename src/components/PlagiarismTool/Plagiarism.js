@@ -206,7 +206,7 @@ export default function BasicTabs({ types = [] }) {
                         title={tooltipMessage}
                         className={isDisabled ? 'disabled-button' : ''}
                       >
-                        {language.charAt(0).toUpperCase() + language.slice(1)} Report
+                        Raport {language.charAt(0).toUpperCase() + language.slice(1)} 
                       </button>
                     );
                   })}
