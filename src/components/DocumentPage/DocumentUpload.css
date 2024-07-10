@@ -1,36 +1,36 @@
-/* DocumentUpload.css */
-
 .document-upload {
     font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.9); /* More opaque white background */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 20px; /* Added margin */
+    margin: 20px;
 }
 
 .document-upload h2 {
     margin-bottom: 15px;
-    color: #555;
+    color: #333; /* Darker text color */
 }
 
 .document-upload input[type="file"] {
     margin-bottom: 15px;
+    color: #333; /* Darker text color */
 }
 
 .document-upload .basic-select {
-    margin-bottom: 10px; /* Reduced margin */
-    width: 100%; /* Make select full width */
+    margin-bottom: 10px;
+    width: 100%;
+    color: #333; /* Darker text color */
 }
 
 .document-upload .upload-button {
     background-color: #007bff;
-    color: rgb(255, 255, 255);
+    color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 15px; /* Added margin-top */
+    margin-top: 15px;
 }
 
 .document-upload .upload-button:hover {

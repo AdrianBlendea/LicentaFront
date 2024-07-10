@@ -182,7 +182,7 @@ export default function ProfileCard(props: any) {
                   color="primary"
                   component="span"
                 >
-                  Update
+                  Actualizare
                 </Button>
               </label>
             </Grid>
@@ -192,7 +192,7 @@ export default function ProfileCard(props: any) {
                 color="secondary"
                 onClick={handleDeletePicture}
               >
-                Delete
+                Ștergere
               </Button>
             </Grid>
           </Grid>

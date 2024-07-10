@@ -124,7 +124,7 @@ function DocumentTabs({ categories }) {
   };
 
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} className="paper-transparent">
       <Box display="flex" justifyContent="center">
         <Tabs
           value={selectedCategory}
