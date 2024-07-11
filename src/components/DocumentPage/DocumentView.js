@@ -6,30 +6,25 @@ import './DocumentView.css';
 
 function DocumentView() {
   const [categories, setCategories] = useState([]);
-  const [documentsByCategory, setDocumentsByCategory] = useState({});
 
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        // Retrieve the auth token from localStorage
         const userData = localStorage.getItem('userData');
         let token = '';
 
         if (userData) {
           const parsedData = JSON.parse(userData);
-          token = parsedData.token; // Extract the token from the parsed userData
+          token = parsedData.token;
         }
 
-        // Fetch categories with the auth token
         const categoryResponse = await axios.get('http://localhost:8080/api/categories', {
-          headers: {
-          
-          }
+          headers: {}
         });
-        
+
         const fetchedCategories = categoryResponse.data;
         setCategories(fetchedCategories);
-        
+
       } catch (error) {
         console.error('Error fetching categories:', error);
         alert('Failed to fetch categories');
@@ -40,11 +35,11 @@ function DocumentView() {
   }, []);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="900"> {/* Change maxWidth to 'lg' for wider container */}
       <Typography variant="h4" gutterBottom>
         Categorii
       </Typography>
-      <DocumentTabs categories={categories} documentsByCategory={documentsByCategory} />
+      <DocumentTabs categories={categories} />
     </Container>
   );
 }

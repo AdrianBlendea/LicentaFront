@@ -90,7 +90,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
       } else {
         setOutput(data.stderr || 'Eroare la executarea codului');
       }
-      setIsCodeRun(true); // Set the code run state to true after successful execution
+      setIsCodeRun(true);
       setLoading(false);
       return response.data;
     } catch (error) {

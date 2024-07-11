@@ -10,6 +10,14 @@ export default function Board() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    document.body.classList.add('leaderboard-page');
+
+    return () => {
+      document.body.classList.remove('leaderboard-page');
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
         const response = await axios.get('http://localhost:8080/statistics/leaderboard');
@@ -31,13 +39,14 @@ export default function Board() {
   }
 
   return (
-    <div className="board">
-      <h1 className='leaderboard'>Clasament punctaje</h1>
+    <div id="main" className="leaderboard-page">
+      <div className="board">
+        <h1 className='leaderboard'>Clasament punctaje</h1>
 
-      <div className="duration">
+
+
+        <Profiles Leaderboard={between(leaderboard, period)}></Profiles>
       </div>
-
-      <Profiles Leaderboard={between(leaderboard, period)}></Profiles>
     </div>
   );
 }
