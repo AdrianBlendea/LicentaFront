@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 
-// STYLES
+
 const styles = {
   details: {
     padding: "1rem",
@@ -21,7 +21,7 @@ const styles = {
   }
 };
 
-// Default profile picture
+
 const defaultProfilePicture = './userIcon';
 
 const fetchUserData = () => {
@@ -34,7 +34,7 @@ const fetchUserData = () => {
   };
 };
 
-// APP
+
 export default function ProfileCard(props: any) {
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
@@ -49,7 +49,6 @@ export default function ProfileCard(props: any) {
       setRole(role);
 
       try {
-        // Fetch total problems resolved
         const problemsResponse = await axios.get('http://localhost:8080/statistics/problems', {
           headers: {
             'Content-Type': 'application/json',
@@ -62,7 +61,6 @@ export default function ProfileCard(props: any) {
 
         setTotalProblems(problemsResponse.data);
 
-        // Fetch ranking place
         const placeResponse = await axios.get('http://localhost:8080/statistics/lplace', {
           headers: {
             'Content-Type': 'application/json',
@@ -75,7 +73,6 @@ export default function ProfileCard(props: any) {
 
         setLplace(placeResponse.data);
 
-        // Fetch profile picture
         const pictureResponse = await axios.get('http://localhost:8080/user/getPicture', {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -153,9 +150,9 @@ export default function ProfileCard(props: any) {
         justifyContent="center"
         alignItems="center"
       >
-        {/* CARD HEADER START */}
+        {}
         <Grid item sx={{ p: "1.5rem 0rem", textAlign: "center" }}>
-          {/* PROFILE PHOTO */}
+          {}
           <Badge
             overlap="circular"
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -166,7 +163,7 @@ export default function ProfileCard(props: any) {
             ></Avatar>
           </Badge>
 
-          {/* Update and Delete Buttons */}
+          {}
           <Grid container justifyContent="center" spacing={2}>
             <Grid item>
               <input
@@ -197,19 +194,19 @@ export default function ProfileCard(props: any) {
             </Grid>
           </Grid>
 
-          {/* DESCRIPTION */}
+          {}
           <Typography variant="h6" sx={{ mt: 2 }}>{name}</Typography>
           <Typography color="text.secondary">{role}</Typography>
         </Grid>
-        {/* CARD HEADER END */}
+        {}
 
-        {/* DETAILS */}
+        {}
         <Grid container>
           <Grid item xs={6}>
             <Typography style={styles.details}>Total probleme rezolvate</Typography>
             <Typography style={styles.details}>Loc in clasament</Typography>
           </Grid>
-          {/* VALUES */}
+          {}
           <Grid item xs={6} sx={{ textAlign: "end" }}>
             <Typography style={styles.value}>{totalProblems}</Typography>
             <Typography style={styles.value}>{lplace}</Typography>

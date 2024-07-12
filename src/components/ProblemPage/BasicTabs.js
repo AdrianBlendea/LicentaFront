@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import ConfirmationDialog from '../Dialogs/ConfirmationDialog'; // Import the new component
+import ConfirmationDialog from '../Dialogs/ConfirmationDialog'; 
 import './BasicTabs.css';
 
 function CustomTabPanel(props) {
@@ -46,9 +46,9 @@ export default function BasicTabs({ types }) {
   const [value, setValue] = useState(0);
   const [problems, setProblems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
-  const [problemToDelete, setProblemToDelete] = useState(null); // State to store problem to delete
-  const [dialogMessage, setDialogMessage] = useState(''); // State to store dialog message
+  const [openDialog, setOpenDialog] = useState(false); 
+  const [problemToDelete, setProblemToDelete] = useState(null);
+  const [dialogMessage, setDialogMessage] = useState(''); 
   const navigate = useNavigate();
 
   const fetchProblems = (typeId) => {
@@ -105,7 +105,7 @@ export default function BasicTabs({ types }) {
 
   const handleOpenDialog = (problemId) => {
     setProblemToDelete(problemId);
-    setDialogMessage('Esti sigur ca vrei sa stergi aceasa problema?'); // Set the custom message
+    setDialogMessage('Esti sigur ca vrei sa stergi aceasa problema?'); 
     setOpenDialog(true);
   };
 
@@ -131,7 +131,6 @@ export default function BasicTabs({ types }) {
         })
           .then(response => {
             console.log(response.data);
-            // Remove the problem from the state
             setProblems(problems.filter(problem => problem.id !== problemToDelete));
             handleCloseDialog();
           })
@@ -186,7 +185,7 @@ export default function BasicTabs({ types }) {
         open={openDialog}
         onClose={handleCloseDialog}
         onConfirm={handleConfirmDelete}
-        message={dialogMessage} // Pass the message prop
+        message={dialogMessage} 
       />
     </Box>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom'; 
 import LottieAnimation from '../animations/LottieAnimation';
-import mainAnimationData from '../animations/homeanimation.json'; // Main animation data
-import pythonanimation from '../animations/pythonanimation.json'; // Small animation data 1
-import javaanimation from '../animations/javaanimation.json'; // Small animation data 2
-import canimation from '../animations/canimation.json'; // Small animation data 3
+import mainAnimationData from '../animations/homeanimation.json'; 
+import pythonanimation from '../animations/pythonanimation.json'; 
+import javaanimation from '../animations/javaanimation.json'; 
+import canimation from '../animations/canimation.json'; 
 import './HomePage.css';
 
 const Homepage = () => {
@@ -30,7 +30,7 @@ const Homepage = () => {
           </div>
           <div className="animation-container">
             <div className="animation">
-              <LottieAnimation animationData={mainAnimationData} /> {/* Passing main animation data as prop */}
+              <LottieAnimation animationData={mainAnimationData} /> {}
             </div>
           </div>
           <div className="right-text">

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import BasicTabs from './BasicTabs'; // Import the BasicTabs component
-import CreateProblemDialog from '../Dialogs/CreateProblemDialog'; // Import the CreateProblemDialog component
+import BasicTabs from './BasicTabs'; 
+import CreateProblemDialog from '../Dialogs/CreateProblemDialog'; 
 import './ProblemPage.css';
 
 const ProblemPage = () => {
     const [types, setTypes] = useState([]);
     const [problemsByType, setProblemsByType] = useState({});
-    const [openCreateDialog, setOpenCreateDialog] = useState(false); // State for create dialog
-    const [isAdmin, setIsAdmin] = useState(false); // State to track if the user is an admin
+    const [openCreateDialog, setOpenCreateDialog] = useState(false); 
+    const [isAdmin, setIsAdmin] = useState(false); 
 
     useEffect(() => {
         const userData = localStorage.getItem('userData');
@@ -20,7 +20,7 @@ const ProblemPage = () => {
             token = parsedData.token;
             role = parsedData.role;
             if (role === 'admin') {
-                setIsAdmin(true); // Set isAdmin to true if the user is an admin
+                setIsAdmin(true); 
             }
         }
 

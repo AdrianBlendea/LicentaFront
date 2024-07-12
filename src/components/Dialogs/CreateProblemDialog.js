@@ -17,8 +17,8 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
   const [testList, setTestList] = useState([{ input: '', expectedOutput: '' }]);
   const [types, setTypes] = useState([]);
   const [selectedType, setSelectedType] = useState('');
-  const [procentToPass, setProcentToPass] = useState(50); // State for percentage to pass
-  const [formValid, setFormValid] = useState(false); // State to track form validity
+  const [procentToPass, setProcentToPass] = useState(50); 
+  const [formValid, setFormValid] = useState(false); 
 
   useEffect(() => {
     const userData = localStorage.getItem('userData');
@@ -38,7 +38,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
       const fetchedTypes = response.data;
       setTypes(fetchedTypes);
       if (fetchedTypes.length > 0) {
-        setSelectedType(fetchedTypes[0].id); // Set the first type as default
+        setSelectedType(fetchedTypes[0].id); 
       }
     })
     .catch(error => {
@@ -51,7 +51,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
   }, [selectedType, testList]);
 
   const validateForm = () => {
-    // Check if selectedType is valid and there is at least one test
+    
     const isSelectedTypeValid = selectedType !== '';
     const isTestListValid = testList.length > 0 && testList.some(test => test.input.trim() !== '' || test.expectedOutput.trim() !== '');
 
@@ -86,7 +86,7 @@ function CreateProblemDialog({ open, onClose, onProblemCreated }) {
         requirement,
         typeId: selectedType,
         testList,
-        procentToPass // Include percentToPass in the DTO
+        procentToPass
       };
 
       axios.post('http://localhost:8080/api/problem/create', newProblem, {

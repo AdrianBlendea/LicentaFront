@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MonacoEditor from "@monaco-editor/react";
 import axios from 'axios';
 import Switch from '@mui/material/Switch';
-import './CodeEditor.css'; // Import CSS file for styling
+import './CodeEditor.css'; 
 import Paper from '@mui/material/Paper';
 
 
@@ -11,17 +11,17 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [language, setLanguage] = useState('java'); // Default language is java
-  const [theme, setTheme] = useState('vs-dark'); // Default theme is vs-dark
-  const [stdinEnabled, setStdinEnabled] = useState(true); // State to track if stdin is enabled or disabled
-  const [testResults, setTestResults] = useState(null); // State to store test results
-  const [isCodeRun, setIsCodeRun] = useState(false); // State to track if the code has been run after changes
-  const [allTestsPassed, setAllTestsPassed] = useState(false); // State to track if all tests passed
+  const [language, setLanguage] = useState('java'); 
+  const [theme, setTheme] = useState('vs-dark'); 
+  const [stdinEnabled, setStdinEnabled] = useState(true); 
+  const [testResults, setTestResults] = useState(null);
+  const [isCodeRun, setIsCodeRun] = useState(false); 
+  const [allTestsPassed, setAllTestsPassed] = useState(false); 
   const [readOnly, setReadOnly] = useState(false);
-  const [canYouRun, setCanYouRun] = useState(true); // State to track if the code has been run after changes
+  const [canYouRun, setCanYouRun] = useState(true); 
   const [deleteButonDisabled, setDeleteButonDisabled] = useState(true);
-  const [percentToPass, setPercentToPass] = useState(50); // Required percentage of tests to pass
-  const [percentPassed, setPercentPassed] = useState(0); // Percentage of tests passed
+  const [percentToPass, setPercentToPass] = useState(50); 
+  const [percentPassed, setPercentPassed] = useState(0); 
   const [paperText, setPaperText] = useState('');
   const [isPaperVisible, setIsPaperVisible] = useState(false);
 
@@ -45,8 +45,8 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
-    setTestResults(null); // Reset test results
-    setIsCodeRun(false); // Reset the code run state
+    setTestResults(null); 
+    setIsCodeRun(false); 
   };
 
   const handleThemeChange = (e) => {
@@ -58,7 +58,7 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
   };
 
   const toggleStdin = () => {
-    setStdinEnabled(!stdinEnabled); // Toggle the state
+    setStdinEnabled(!stdinEnabled);
   };
 
 
@@ -103,22 +103,20 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
     try {
       const currentPageNumber = window.location.pathname.split('/').pop();
 
-      // Use the extracted number to construct the dynamic URL
       const dynamicURL = `http://localhost:8080/test/${currentPageNumber}`;
 
-      // Retrieve the auth token from localStorage
       const userData = localStorage.getItem('userData');
       let token = '';
 
       if (userData) {
         const parsedData = JSON.parse(userData);
-        token = parsedData.token; // Extract the token from the parsed userData
+        token = parsedData.token; 
       }
 
-      // Make the axios request using the dynamic URL
+      
       const response = await axios.get(dynamicURL, {
         headers: {
-          'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+          'Authorization': `Bearer ${token}` 
         }
       });
       return response.data;
@@ -142,27 +140,25 @@ const CodeEditor = ({ initialCode = '', initialLanguage = 'java', solved = false
       const testCase = testCases[i];
       const { input: testCaseInput, expectedOutput } = testCase;
 
-      // Set input for the current test case
-      //setInput(testCaseInput);
+  
 
-      // Run the code
       const data = await runCode(code, testCaseInput);
 
-      // Check if the actual output matches the expected output
+     
       const actualOutput = data.stdout;
       const testPassed = actualOutput.trim() === expectedOutput.trim();
       if (testPassed) {
         testsPassed++;
       }
 
-      // After running the code, push the test result to results array
+      
       results.push({ ...testCase, actualOutput, testPassed });
     }
 
     const percentPassed = (testsPassed / testCases.length) * 100;
     setPercentPassed(percentPassed);
     setTestResults(results);
-    setAllTestsPassed(percentPassed >= percentToPass); // Update allTestsPassed state based on percentPassed
+    setAllTestsPassed(percentPassed >= percentToPass); 
   };
 
   const setDefaultCode = (language) => {
@@ -212,7 +208,7 @@ int main() {
 
   const handleCodeChange = (newCode) => {
     setCode(newCode);
-    setIsCodeRun(false); // Disable the "Run Test Cases" button when the code changes
+    setIsCodeRun(false); 
     setAllTestsPassed(false);
   };
 
@@ -224,7 +220,7 @@ int main() {
 
       if (userData) {
         const parsedData = JSON.parse(userData);
-        userId = parsedData.id; // Extract the userId from the parsed userData
+        userId = parsedData.id; 
         token = parsedData.token;
       }
 
@@ -233,7 +229,7 @@ int main() {
       await axios.delete('http://localhost:8080/solution/delete', {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Add the token to the Authorization header
+          'Authorization': `Bearer ${token}`, 
         },
         params: {
           userId: userId,
@@ -257,7 +253,7 @@ int main() {
 
       if (userData) {
         const parsedData = JSON.parse(userData);
-        userId = parsedData.id; // Extract the userId from the parsed userData
+        userId = parsedData.id; 
         token = parsedData.token;
       }
 
@@ -267,13 +263,13 @@ int main() {
         userId: userId,
         problemId: problemId,
         language: language,
-        procentScored: percentPassed // Add the percentage of tests that actually passed
+        procentScored: percentPassed 
       };
 
       await axios.post('http://localhost:8080/solution/submit', solutionDTO, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Add the token to the Authorization header
+          'Authorization': `Bearer ${token}`, 
         },
       });
 
@@ -293,7 +289,7 @@ int main() {
         <option value="python">Python</option>
         <option value="cpp">C++</option>
         <option value="java">Java</option>
-        {/* Add more options for other languages if needed */}
+        {}
       </select>
     </div>
     <div className="theme-select-container">
@@ -314,17 +310,17 @@ int main() {
       <MonacoEditor
         width="900"
         height="41vh"
-        language={language} // Use the selected language
-        theme={theme} // Use the selected theme
+        language={language} 
+        theme={theme} 
         value={code}
         options={{
           //automaticLayout: true,
           readOnly:readOnly,
-          minimap: { enabled: false }, // Disable minimap
-          suggest: true, // Enable code suggestions (code completion)
-          wordWrap: 'on', // Enable word wrapping
-          fontFamily: '"Fira Code", "Courier New", monospace', // Custom font family
-          fontSize: 16, // Custom font size
+          minimap: { enabled: false }, 
+          suggest: true, 
+          wordWrap: 'on', 
+          fontFamily: '"Fira Code", "Courier New", monospace',
+          fontSize: 16, 
         }}
         onChange={handleCodeChange}
       />
