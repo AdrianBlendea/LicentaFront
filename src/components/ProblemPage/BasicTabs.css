@@ -15,16 +15,16 @@
   min-width: 72px;
   font-weight: 500;
   margin-right: 20px;
-  color: #000; /* Default color for the tab labels */
+  color: #000; 
   transition: color 0.3s;
 }
 
 .tab-header .MuiTab-root.Mui-selected {
-  color: #1976d2; /* Color for the selected tab */
+  color: #1976d2; 
 }
 
 .tab-header .MuiTab-root:hover {
-  color: #005bb5; /* Color for the tab labels on hover */
+  color: #005bb5;
 }
 
 .tab-header .MuiTab-root.Mui-focusVisible {
@@ -42,12 +42,12 @@
 }
 
 .problem-card {
-  position: relative; /* Ensure the delete button is positioned relative to the card */
+  position: relative;
   padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff; /* Ensure background is white */
+  background-color: #fff; 
   transition: box-shadow 0.3s, border-color 0.3s;
 }
 
@@ -58,12 +58,12 @@
 
 .problem-link {
   text-decoration: none;
-  color: #000; /* Color for unsolved problems */
+  color: #000; 
   transition: color 0.3s;
 }
 
 .problem-link:hover {
-  color: #005bb5; /* Change the color on hover */
+  color: #005bb5; 
 }
 
 .problem-link h2 {
@@ -74,7 +74,6 @@
   margin: 0;
 }
 
-/* Add specific styles for the solved problems */
 .problem-card.solved {
   border-color: #4caf50;
   background-color: #e8f5e9;

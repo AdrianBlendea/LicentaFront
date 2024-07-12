@@ -7,21 +7,19 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ProfileCard from "./ProfileCard.tsx";
 import SettingsCard from "./SettingsCard.tsx";
 
-// FONTS
+
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-// STYLE & THEME
+
 const theme = createTheme();
 
-// APP
 export default function ProfilePage() {
   const [text, setText] = useState("");
 
   const mainUser = {
-    // DEFAULT VALUES
     title: "CEO of Apple",
     dt1: 32,
     dt2: 40,

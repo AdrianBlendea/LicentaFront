@@ -3,20 +3,20 @@ import axios from 'axios';
 import { Tabs, Tab, Box, List, ListItem, ListItemText, ListItemIcon, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DownloadIcon from '@mui/icons-material/Download'; // Import DownloadIcon
+import DownloadIcon from '@mui/icons-material/Download';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import ConfirmationDialog from '../Dialogs/ConfirmationDialog'; // Import the ConfirmationDialog component
-import './DocumentTabs.css'; // Add your custom CSS here
+import ConfirmationDialog from '../Dialogs/ConfirmationDialog'; 
+import './DocumentTabs.css'; 
 
 function DocumentTabs({ categories }) {
-  const { isAuthenticated, user } = useAuth(); // Assuming user object has the role info
+  const { isAuthenticated, user } = useAuth(); 
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [documentsByCategory, setDocumentsByCategory] = useState({});
-  const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
-  const [documentToDelete, setDocumentToDelete] = useState(null); // State to store document to delete
-  const [dialogMessage, setDialogMessage] = useState(''); // State to store dialog message
+  const [openDialog, setOpenDialog] = useState(false); 
+  const [documentToDelete, setDocumentToDelete] = useState(null); 
+  const [dialogMessage, setDialogMessage] = useState(''); 
 
   useEffect(() => {
     const fetchDocumentsByCategory = async () => {
@@ -83,7 +83,7 @@ function DocumentTabs({ categories }) {
 
   const handleOpenDialog = (documentId) => {
     setDocumentToDelete(documentId);
-    setDialogMessage('Esti sigur ca vrei sa stergi acest document?'); // Set the custom message
+    setDialogMessage('Esti sigur ca vrei sa stergi acest document?'); 
     setOpenDialog(true);
   };
 
@@ -109,7 +109,6 @@ function DocumentTabs({ categories }) {
         })
           .then(response => {
             console.log(response.data);
-            // Remove the document from the state
             const updatedDocuments = { ...documentsByCategory };
             updatedDocuments[categories[selectedCategory].id] = updatedDocuments[categories[selectedCategory].id].filter(doc => doc.id !== documentToDelete);
             setDocumentsByCategory(updatedDocuments);
@@ -172,7 +171,7 @@ function DocumentTabs({ categories }) {
         open={openDialog}
         onClose={handleCloseDialog}
         onConfirm={handleConfirmDelete}
-        message={dialogMessage} // Pass the message prop
+        message={dialogMessage} 
       />
     </Paper>
   );

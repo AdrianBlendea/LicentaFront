@@ -10,7 +10,7 @@ const EditorPage = () => {
   const [error, setError] = useState(null);
   const [problemRequirement, setProblemRequirement] = useState('');
   const [solution, setSolution] = useState('');
-  const [language, setLanguage] = useState('java'); // Default language
+  const [language, setLanguage] = useState('java');
   const [solvedProblem, setSolvedProblem] = useState(false);
   const [solutionProcent, setSolutionProcent] = useState(0);
 
@@ -23,14 +23,13 @@ const EditorPage = () => {
 
         if (userData) {
           const parsedData = JSON.parse(userData);
-          token = parsedData.token; // Extract the token from the parsed userData
+          token = parsedData.token; 
           userId = parsedData.id;
         }
 
-        // Fetch problem requirement with the auth token
         const response = await axios.get(`http://localhost:8080/api/problem/${problemId}`, {
           headers: {
-            'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+            'Authorization': `Bearer ${token}` 
           },
           params: {
             userId: userId
@@ -39,8 +38,7 @@ const EditorPage = () => {
 
         const { requirment, solved } = response.data;
         setProblemRequirement(requirment);
-
-        // Conditionally fetch solution if the problem is solved
+d
         if (solved) {
           const solutionResponse = await axios.get('http://localhost:8080/solution', {
             headers: {

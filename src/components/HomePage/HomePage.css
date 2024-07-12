@@ -1,47 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Example font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); 
 
 .homepage {
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  background-color: #282a36; /* Dark background similar to Dracula theme */
-  color: #f8f8f2; /* Light text color */
+  background-color: #282a36; 
+  color: #f8f8f2;
 }
 
 .homepage .homepage-header {
-  background-color: #44475a; /* Darker grey for the header */
+  background-color: #44475a; 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #f8f8f2; /* Light text color */
+  color: #f8f8f2; 
   padding: 20px;
 }
 
 .homepage .content {
   display: flex;
-  align-items: flex-start; /* Align items to the start to allow text to take more space */
-  justify-content: center; /* Center the entire content */
+  align-items: flex-start; 
+  justify-content: center; 
   margin-top: 20px;
   width: 100%;
-  max-width: 1600px; /* Increase max width to allow more space */
+  max-width: 1600px; 
 }
 
 .homepage .left-text, .homepage .right-text {
-  flex: 1; /* Equal flex for both left and right text */
+  flex: 1; 
   padding: 20px;
-  color: #f8f8f2; /* Light text color */
-  font-size: 16px; /* Adjusted for better readability */
-  max-width: 30%; /* Ensure text boxes have a maximum width */
-  background-color: #44475a; /* Dark grey background for text sections */
-  border-radius: 8px; /* Rounded corners for text sections */
-  border: 1px solid #6272a4; /* Add border with a color similar to the header */
-  margin: 0 20px; /* Add margin between the sections */
+  color: #f8f8f2;
+  font-size: 16px; 
+  max-width: 30%; 
+  background-color: #44475a; 
+  border-radius: 8px; 
+  border: 1px solid #6272a4; 
+  margin: 0 20px; 
 }
 
 .homepage .left-text h2, .homepage .right-text h2 {
-  color: #50fa7b; /* Green color similar to code editor functions */
+  color: #50fa7b; 
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 10px;
@@ -49,34 +49,34 @@
 
 .homepage .animation-container {
   display: flex;
-  justify-content: center; /* Center the main animation */
+  justify-content: center; 
   align-items: center;
-  flex: 2; /* Increase flex for the main animation to occupy more space */
-  margin: 0 20px; /* Add margin between the sections */
+  flex: 2; 
+  margin: 0 20px; 
 }
 
 .homepage h1 {
   margin: 20px;
-  color: #f8f8f2; /* Light text color for h1 */
+  color: #f8f8f2; 
 }
 
 .homepage h1:first-of-type {
-  font-size: 36px; /* Keep the first h1 bigger */
+  font-size: 36px; 
   font-weight: 700;
-  color: #ff79c6; /* Pink color for the first h1, similar to code editor keywords */
+  color: #ff79c6; 
 }
 
 .homepage h1:nth-of-type(2) {
-  font-size: 18px; /* Make the second h1 smaller */
+  font-size: 18px; 
   font-weight: 400;
-  color: #8be9fd; /* Cyan color for the second h1, similar to code editor strings */
+  color: #8be9fd; 
 }
 
-/* Adjust the size of the Lottie animation */
+
 .homepage .lottie-animation {
   max-width: 100%;
   max-height: 100%;
-  width: 50vw; /* Adjust the size as needed */
+  width: 50vw; 
   height: 70vh;
   margin: 0 auto;
 }
@@ -88,35 +88,33 @@
 }
 
 .homepage .small-animations .lottie-animation {
-  width: 20vw; /* Adjust the size of the small animations as needed */
+  width: 20vw; 
   height: 20vh;
 }
 
-/* Add some styling for code-like text */
 .homepage code {
-  background-color: #44475a; /* Background for code blocks */
-  color: #f1fa8c; /* Yellow color for code */
+  background-color: #44475a; 
+  color: #f1fa8c; 
   padding: 2px 4px;
   border-radius: 4px;
-  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+  font-family: 'Courier New', Courier, monospace; 
 }
 
-/* Add styles for the start button */
 .start-button {
   display: inline-block;
   margin-top: 20px;
   padding: 15px 30px;
   font-size: 18px;
   font-weight: 700;
-  color: #f8f8f2; /* Light text color */
-  background-color: #50fa7b; /* Green background color */
+  color: #f8f8f2; 
+  background-color: #50fa7b; 
   border: none;
   border-radius: 8px;
-  text-decoration: none; /* Remove underline from link */
+  text-decoration: none; 
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .start-button:hover {
-  background-color: #45e66c; /* Darken the green on hover */
+  background-color: #45e66c; 
 }

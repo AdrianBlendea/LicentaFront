@@ -146,10 +146,9 @@ export default function BasicTabs({ types = [] }) {
           problemId: problemId,
           solutionLanguage: language
         },
-        responseType: 'blob' // Important to handle the binary data
+        responseType: 'blob' 
       })
         .then(response => {
-          // Create a link to download the file
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;

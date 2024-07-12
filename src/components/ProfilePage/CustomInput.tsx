@@ -1,8 +1,7 @@
-// IMPORTS
+
 import React, { useState, useEffect } from 'react';
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-//APP
 export default function CustomInput(props: any) {
   return (
     <Box>

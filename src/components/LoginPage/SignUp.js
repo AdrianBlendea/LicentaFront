@@ -32,7 +32,6 @@ function SignUpForm() {
   const handleOnSubmit = evt => {
     evt.preventDefault();
 
-    // Show the dialog immediately
     setOpen(true);
 
     const { nume, email, parola } = state;
@@ -43,14 +42,13 @@ function SignUpForm() {
       password: parola
     };
 
-    // Clear the form fields
+
     setState({
       nume: "",
       email: "",
       parola: ""
     });
 
-    // Using fetch API to send the registration request
     fetch('http://localhost:8080/api/register', {
       method: 'POST',
       headers: {

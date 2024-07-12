@@ -10,10 +10,10 @@
 
 .problem-card {
   padding: 15px;
-  border: 1px solid #666; /* Darker grey border */
+  border: 1px solid #666; 
   border-radius: 8px;
-  background-color: #333; /* Dark grey background */
-  color: #f0f0f0; /* Light grey text color */
+  background-color: #333;
+  color: #f0f0f0; 
 }
 
 .problem-link {
@@ -26,7 +26,6 @@
   padding: 0;
 }
 
-/* Styles for the "Create Problem" button */
 .create-problem-button {
   padding: 10px 20px;
   font-size: 16px;
@@ -37,7 +36,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-bottom: 20px; /* Add some space below the button */
+  margin-bottom: 20px; 
 }
 
 .create-problem-button:hover {

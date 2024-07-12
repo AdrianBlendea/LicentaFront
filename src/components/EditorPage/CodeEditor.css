@@ -62,13 +62,13 @@
 }
 
 .editor-container {
-  margin-top: 60px; /* Adjust this if necessary */
+  margin-top: 60px; 
 }
 
 .theme-select-container {
   position: absolute;
   top: 20px;
-  left: 280px; /* Adjust spacing between language and theme select containers */
+  left: 280px; 
   font-family: Arial, sans-serif;
   display: flex;
   align-items: center;
@@ -140,23 +140,23 @@
 }
 
 .run-test-button {
-  margin-left: 10px; /* Adjust the margin as needed */
+  margin-left: 10px; 
 }
 
 .submit-button {
-  margin-left: 10px; /* Adjust the margin as needed */
+  margin-left: 10px; 
 }
 
 .delete-solution-button {
-  margin-left:10px; /* Adjust the margin as needed */
+  margin-left:10px; 
 }
 .paper-container {
   position: absolute !important;
   bottom: 20px !important;
   right: 20px !important;
   padding: 10px 20px !important;
-  background-color: #1dc446 !important; /* Background color set to green */
-  color: #ffffff !important; /* Text color set to a different shade of green */
+  background-color: #1dc446 !important; 
+  color: #ffffff !important; 
   font-size: 16px !important;
   border-radius: 4px !important;
   width: 300px !important;

@@ -35,7 +35,7 @@ function DocumentView() {
   }, []);
 
   return (
-    <Container maxWidth="900"> {/* Change maxWidth to 'lg' for wider container */}
+    <Container maxWidth="900"> {}
       <Typography variant="h4" gutterBottom>
         Categorii
       </Typography>

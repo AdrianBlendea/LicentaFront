@@ -32,7 +32,7 @@ ConfirmationDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired, // Add the message prop type
+  message: PropTypes.string.isRequired, 
 };
 
 export default ConfirmationDialog;
